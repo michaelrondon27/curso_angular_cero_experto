@@ -24,4 +24,8 @@ export class MainPageComponent {
         }
     ];
 
+    onNewCharacter(character: Character): void {
+
+    }
+
 }
