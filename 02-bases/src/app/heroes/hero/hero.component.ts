@@ -10,4 +10,12 @@ export class HeroComponent {
     public age: number = 45;
     public name: string = 'ironman';
 
+    get capitalizeName(): string {
+        return this.name.toUpperCase();
+    }
+
+    getHeroDescription(): string {
+        return `${ this.name } - ${ this.age }`;
+    }
+
 }
