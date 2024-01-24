@@ -27,7 +27,7 @@ export class DbzService {
         }
     ];
 
-    onNewCharacter(character: Character): void {
+    addCharacter(character: Character): void {
         this.characters.push(character);
     }
 
