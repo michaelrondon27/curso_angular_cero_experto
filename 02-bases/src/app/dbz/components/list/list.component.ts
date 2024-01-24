@@ -10,4 +10,10 @@ export class ListComponent {
 
     @Input() public characterList: Character[] = [];
 
+    // onDelete = index value : number
+
+    onDeleteCharacter(index: number): void {
+
+    }
+
 }
