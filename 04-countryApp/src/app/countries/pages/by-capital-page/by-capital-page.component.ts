@@ -20,6 +20,7 @@ export class ByCapitalPageComponent implements OnInit, OnDestroy {
     ) { }
 
     ngOnInit(): void {
+        console.log(this.countriesService.cacheStore);
         this.countries = this.countriesService.cacheStore.byCapital.countries;
         this.initialValue = this.countriesService.cacheStore.byCapital.term;
     }
