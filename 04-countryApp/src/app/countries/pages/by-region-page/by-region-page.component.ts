@@ -1,10 +1,10 @@
 import { Component, OnDestroy } from '@angular/core';
-
-import { Country } from '../../interfaces/country.interface';
-import { CountriesService } from '../../services/countries.service';
 import { Subject, takeUntil } from 'rxjs';
 
-type Region = 'Africa'|'Americas'|'Asia'|'Europe'|'Oceania';
+import { Country } from '../../interfaces/country.interface';
+import { Region } from '../../interfaces/region.type';
+
+import { CountriesService } from '../../services/countries.service';
 
 @Component({
     selector: 'app-by-region-page',
