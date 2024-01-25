@@ -4,6 +4,7 @@ import { Observable, catchError, map, of, tap } from 'rxjs';
 
 import { CacheStore } from '../interfaces/cache-store.interface';
 import { Country } from '../interfaces/country.interface';
+import { Region } from '../interfaces/region.type';
 
 @Injectable({
     providedIn: 'root'
@@ -38,7 +39,10 @@ export class CountriesService {
 
     searchCountry(term: string): Observable<Country[]> {
         const url: string = `${ this.apiUrl }/name/${ term }`;
-        return this.getCountriesRequest(url);
+        return this.getCountriesRequest(url)
+            .pipe(
+                tap(countries => this.cacheStore.byCountries = { term, countries })
+            );
     }
 
     searchCountryByAlphaCode(code: string): Observable<Country | null> {
@@ -50,9 +54,12 @@ export class CountriesService {
             );
     }
 
-    searchRegion(term: string): Observable<Country[]> {
-        const url: string = `${ this.apiUrl }/region/${ term }`;
-        return this.getCountriesRequest(url);
+    searchRegion(region: Region): Observable<Country[]> {
+        const url: string = `${ this.apiUrl }/region/${ region }`;
+        return this.getCountriesRequest(url)
+            .pipe(
+                tap(countries => this.cacheStore.byRegion = { region, countries })
+            );
     }
 
 }
