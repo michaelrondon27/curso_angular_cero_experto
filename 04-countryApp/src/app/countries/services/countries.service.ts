@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, map, of } from 'rxjs';
+import { Observable, catchError, map, of, tap } from 'rxjs';
 
 import { CacheStore } from '../interfaces/cache-store.interface';
 import { Country } from '../interfaces/country.interface';
@@ -30,7 +30,10 @@ export class CountriesService {
 
     searchCapital(term: string): Observable<Country[]> {
         const url: string = `${ this.apiUrl }/capital/${ term }`;
-        return this.getCountriesRequest(url);
+        return this.getCountriesRequest(url)
+            .pipe(
+                tap(countries => this.cacheStore.byCapital = { term, countries })
+            );
     }
 
     searchCountry(term: string): Observable<Country[]> {

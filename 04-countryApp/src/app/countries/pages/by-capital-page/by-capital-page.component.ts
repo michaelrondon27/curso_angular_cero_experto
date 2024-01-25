@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { Country } from '../../interfaces/country.interface';
 import { CountriesService } from '../../services/countries.service';
@@ -8,15 +8,21 @@ import { Subject, takeUntil } from 'rxjs';
     selector: 'app-by-capital-page',
     templateUrl: './by-capital-page.component.html'
 })
-export class ByCapitalPageComponent implements OnDestroy {
+export class ByCapitalPageComponent implements OnInit, OnDestroy {
 
     public countries: Country[] = [];
     public isLoading: boolean = false;
+    public initialValue: string = '';
     private _destroy$: Subject<Country[]> = new Subject();
 
     constructor(
         private countriesService: CountriesService
     ) { }
+
+    ngOnInit(): void {
+        this.countries = this.countriesService.cacheStore.byCapital.countries;
+        this.initialValue = this.countriesService.cacheStore.byCapital.term;
+    }
 
     searchByCapital(term: string): void {
         this.isLoading = true;
