@@ -3,11 +3,11 @@ import { CommonModule } from '@angular/common';
 
 import { AuthRoutingModule } from './auth-routing.module';
 
-import { RegisterComponent } from './pages/register/register.component';
+import { RegisterPageComponent } from './pages/register-page/register-page.component';
 
 @NgModule({
     declarations: [
-        RegisterComponent
+        RegisterPageComponent
     ],
     imports: [
         CommonModule,
