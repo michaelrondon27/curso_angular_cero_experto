@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { MaterialModule } from '../material/material.module';
 import { HeroesRoutingModule } from './heroes-routing.module';
@@ -26,7 +27,8 @@ import { SearchPageComponent } from './pages/search-page/search-page.component';
     imports: [
         CommonModule,
         HeroesRoutingModule,
-        MaterialModule
+        MaterialModule,
+        ReactiveFormsModule
     ]
 })
 export class HeroesModule { }
