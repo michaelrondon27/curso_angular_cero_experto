@@ -1,16 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-new-page',
-  templateUrl: './new-page.component.html',
-  styles: [
-  ]
+    selector: 'app-new-page',
+    templateUrl: './new-page.component.html'
 })
-export class NewPageComponent implements OnInit {
+export class NewPageComponent {
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
+    public publishers = [
+        { id: 'DC Comics', desc: 'DC - Comics' },
+        { id: 'Marvel Comics', desc: 'Marvel - Comics' }
+    ]
 
 }
