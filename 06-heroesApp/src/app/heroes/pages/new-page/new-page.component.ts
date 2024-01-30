@@ -22,6 +22,10 @@ export class NewPageComponent {
     public publishers = [
         { id: Publisher.DCComics, desc: 'DC - Comics' },
         { id: Publisher.MarvelComics, desc: 'Marvel - Comics' }
-    ]
+    ];
+
+    onSubmit(): void {
+
+    }
 
 }
