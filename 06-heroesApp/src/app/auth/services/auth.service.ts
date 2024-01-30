@@ -23,7 +23,7 @@ export class AuthService {
         return structuredClone(this.user);
     }
 
-    checkAuthentication(): Observable<boolean> | boolean {
+    checkAuthentication(): Observable<boolean> {
         if (!localStorage.getItem('token')) return of(false);
 
         const token: string = localStorage.getItem('token')!;
