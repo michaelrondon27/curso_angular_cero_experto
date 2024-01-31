@@ -1,16 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
-  selector: 'app-basic-page',
-  templateUrl: './basic-page.component.html',
-  styles: [
-  ]
+    selector: 'app-basic-page',
+    templateUrl: './basic-page.component.html'
 })
-export class BasicPageComponent implements OnInit {
+export class BasicPageComponent {
 
-  constructor() { }
+    public myForm: FormGroup = this.formBuilder.group({
+        inStorage: [0],
+        price: [0],
+        name: ['']
+    });
 
-  ngOnInit(): void {
-  }
+    constructor(
+        private formBuilder: FormBuilder
+    ) { }
+
+    onSave(): void {
+
+    }
 
 }
