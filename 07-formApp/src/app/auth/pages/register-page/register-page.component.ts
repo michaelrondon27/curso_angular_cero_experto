@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 // import * as customValidators from '../../../shared/validators/validators';
 import { ValidatorsService } from '../../../shared/services/validators.service';
+import { EmailValidatorService } from '../../../shared/validators/email-validator.service';
 
 @Component({
     selector: 'app-register-page',
@@ -11,7 +12,7 @@ import { ValidatorsService } from '../../../shared/services/validators.service';
 export class RegisterPageComponent {
 
     public myForm: FormGroup = this.formBuilder.group({
-        email: ['', [Validators.required, Validators.pattern(this.validatorsService.emailPattern)]],
+        email: ['', [Validators.required, Validators.pattern(this.validatorsService.emailPattern)], [new EmailValidatorService()]],
         name: ['', [Validators.required, Validators.pattern(this.validatorsService.firstNameAndLastnamePattern)]],
         password: ['', [Validators.required, Validators.minLength(6)]],
         password2: ['', [Validators.required]],
