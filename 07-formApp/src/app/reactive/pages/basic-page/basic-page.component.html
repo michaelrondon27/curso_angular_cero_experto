@@ -20,8 +20,12 @@
                         formControlName="name"
                     />
 
-                    <span class="form-text text-danger">
-                        error message
+                    <span *ngIf="myForm.controls['name'].getError('required') && myForm.controls['name'].touched" class="form-text text-danger">
+                        Este campo es requerido
+                    </span>
+
+                    <span *ngIf="myForm.controls['name'].getError('minlength') && myForm.controls['name'].touched" class="form-text text-danger">
+                        Este campo requiere mínimo 3 letras
                     </span>
                 </div>
             </div>
