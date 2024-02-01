@@ -2,7 +2,7 @@
 
 <hr>
 
-<form autocomplete="off">
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()" autocomplete="off">
     <div class="mb-3 row">
         <label class="col-sm-3 col-form-label">Nombre</label>
 
@@ -10,6 +10,7 @@
             <input
                 class="form-control"
                 placeholder="Nombre de la persona"
+                formControlName="name"
             />
 
             <span class="form-text text-danger">
@@ -41,10 +42,13 @@
     <div class="mb-3 row">
         <label class="col-sm-3 col-form-label">Favoritos</label>
 
-        <div class="col-sm-9">
-            <div class="mb-1">
+        <div class="col-sm-9" formArrayName="favoriteGames">
+            <div class="mb-1" *ngFor="let favorite of favoriteGames.controls; let i = index">
                 <div class="input-group">
-                    <input class="form-control">
+                    <input
+                        class="form-control"
+                        [formControlName]="i"
+                    >
 
                     <button
                         class="btn btn-outline-danger"
