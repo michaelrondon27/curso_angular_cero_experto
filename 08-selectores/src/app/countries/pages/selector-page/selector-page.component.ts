@@ -11,7 +11,7 @@ import { CountriesService } from '../../services/countries.service';
 })
 export class SelectorPageComponent implements OnInit {
 
-    public borders: string[] = [];
+    public borders: SmallCountry[] = [];
     public countriesByRegion: SmallCountry[] = [];
     public myForm: FormGroup = this.formBuilder.group({
         border:  ['', Validators.required],
@@ -38,9 +38,10 @@ export class SelectorPageComponent implements OnInit {
             .pipe(
                 tap(() => this.myForm.get('border')!.setValue('')),
                 filter((value: string) => value.length > 0),
-                switchMap(alphaCode => this.countriesService.getCountryByAlphaCode(alphaCode))
+                switchMap(alphaCode => this.countriesService.getCountryByAlphaCode(alphaCode)),
+                switchMap(country => this.countriesService.getCountryBordersByCodes(country.borders))
             )
-            .subscribe(country => this.borders = country.borders);
+            .subscribe(countries => this.borders = countries);
     }
 
     onRegionChanged(): void {
