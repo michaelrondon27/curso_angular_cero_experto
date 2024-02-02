@@ -9,8 +9,6 @@ import { Country, Region, SmallCountry } from '../interfaces/country.interfaces'
 })
 export class CountriesService {
 
-    private baseUrl: string = 'https://restcountries.com/v3.1';
-
     private _regions: Region[] = [
         Region.Africa,
         Region.Americas,
@@ -18,6 +16,8 @@ export class CountriesService {
         Region.Europe,
         Region.Oceania
     ];
+
+    private baseUrl: string = 'https://restcountries.com/v3.1';
 
     constructor(
         private httpClient: HttpClient
@@ -39,6 +39,19 @@ export class CountriesService {
                     cca3: country.cca3,
                     name: country.name.common
                 })))
+            );
+    }
+
+    getCountryByAlphaCode(alphaCode: string): Observable<SmallCountry> {
+        const url = `${ this.baseUrl }/alpha/${ alphaCode }?fields=cca3,name,borders`;
+
+        return this.httpClient.get<Country>(url)
+            .pipe(
+                map(country => ({
+                    borders: country.borders ?? [],
+                    cca3: country.cca3,
+                    name: country.name.common
+                }))
             );
     }
 
