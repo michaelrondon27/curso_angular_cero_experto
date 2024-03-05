@@ -19,7 +19,7 @@
         <div class="row">
             <div *ngFor="let house of houses" class="col-4 mb-2">
                 <div class="card">
-                    <img src="..." class="card-img-top" />
+                    <maps-mini-map [lngLat]="house.lngLat"></maps-mini-map>
 
                     <div class="card-body">
                         <h5 class="card-title">

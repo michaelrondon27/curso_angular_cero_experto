@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 interface House {
     description: string;
-    lngLat: number[];
+    lngLat: [number, number];
     title: string;
 }
 
