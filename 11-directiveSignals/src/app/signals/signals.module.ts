@@ -1,5 +1,9 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
+import { RouterModule } from "@angular/router";
+
+// Components
+import { SideMenuComponent } from './components/side-menu/side-menu.component';
 
 // Layout
 import { SignalsLayoutComponent } from './layout/signals-layout/signals-layout.component';
@@ -15,13 +19,15 @@ import { SignalsRoutingModule } from "./signals-routing.module";
 @NgModule({
     declarations: [
         CounterPageComponent,
-        SignalsLayoutComponent,
         PropertiesPageComponent,
+        SideMenuComponent,
+        SignalsLayoutComponent,
         UserInfoPageComponent
     ],
     imports: [
         CommonModule,
-        SignalsRoutingModule
+        SignalsRoutingModule,
+        RouterModule
     ]
 })
 export class  SignalsModule { }
