@@ -1,5 +1,6 @@
-import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { ReactiveFormsModule } from "@angular/forms";
 
 // Components
 import { ProductPageComponent } from './pages/product-page/product-page.component';
@@ -13,6 +14,7 @@ import { ProductsRoutingModule } from "./products-routing.module";
     ],
     imports: [
         CommonModule,
+        ReactiveFormsModule,
         ProductsRoutingModule
     ]
 })
