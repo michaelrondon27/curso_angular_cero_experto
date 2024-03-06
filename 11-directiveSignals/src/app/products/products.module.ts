@@ -5,6 +5,9 @@ import { ReactiveFormsModule } from "@angular/forms";
 // Components
 import { ProductPageComponent } from './pages/product-page/product-page.component';
 
+// Modules
+import { SharedModule } from "../shared/shared.module";
+
 // Routes
 import { ProductsRoutingModule } from "./products-routing.module";
 
@@ -15,7 +18,8 @@ import { ProductsRoutingModule } from "./products-routing.module";
     imports: [
         CommonModule,
         ReactiveFormsModule,
-        ProductsRoutingModule
+        ProductsRoutingModule,
+        SharedModule
     ]
 })
 export class ProductsModule { }
