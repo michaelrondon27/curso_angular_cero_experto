@@ -10,14 +10,14 @@ import { SingleUserResponse, User } from "../interfaces/user-request.interface";
 })
 export class UsersService {
 
-    private httpClient = inject(HttpClient);
+    private httpClient: HttpClient = inject(HttpClient);
 
     private baseUrl = 'https://reqres.in/api/users';
 
     getUserById(id: number): Observable<User> {
         return this.httpClient.get<SingleUserResponse>(`${ this.baseUrl }/${ id }`)
             .pipe(
-                map(response => response.date)
+                map(response => response.data)
             );
     }
 

@@ -1,5 +1,5 @@
 export interface SingleUserResponse {
-    date: User;
+    data: User;
     support: Support;
 }
 
