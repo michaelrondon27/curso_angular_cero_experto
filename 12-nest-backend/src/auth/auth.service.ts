@@ -1,5 +1,6 @@
 import { BadRequestException, Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import * as bcryptjs from 'bcryptjs';
 import { Model } from 'mongoose';
 
 // DTOs
@@ -18,9 +19,16 @@ export class AuthService {
 
     async create(createUserDto: CreateUserDto): Promise<User> {
         try {
-            const newUser = new this.userModel(createUserDto);
+            const { password, ...userData } = createUserDto;
+            const newUser = new this.userModel({
+                password: bcryptjs.hashSync(password, 10),
+                ...userData
+            });
 
-            return await newUser.save();
+            await newUser.save();
+            const { password:_, ...user } = newUser.toJSON();
+
+            return user;
         } catch (error) {
             if (error.code === 11000) {
                 throw new BadRequestException(`${ createUserDto.email } already exists!`);

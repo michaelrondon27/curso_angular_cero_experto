@@ -12,7 +12,7 @@ export class User {
     name: string;
 
     @Prop({ minlength: 6, required: true })
-    password: string;
+    password?: string;
 
     @Prop({ default: ['User'], type: [String] })
     roles: string[]
