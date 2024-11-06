@@ -51,6 +51,13 @@ export class AuthService {
         return `This action returns a #${id} auth`;
     }
 
+    async findUserById(id: string): Promise<User> {
+        const user = await this.userModel.findById(id);
+        const { password, ...rest } = user.toJSON();
+
+        return rest;
+    }
+
     getJwtToken(payload: JwtPayload) {
         const token = this.jwtService.sign(payload);
 
