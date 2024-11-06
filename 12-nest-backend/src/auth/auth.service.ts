@@ -5,9 +5,7 @@ import * as bcryptjs from 'bcryptjs';
 import { Model } from 'mongoose';
 
 // DTOs
-import { CreateUserDto } from './dto/create-user.dto';
-import { LoginDto } from './dto/login.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
+import { CreateUserDto, LoginDto, RegisterUserDto, UpdateAuthDto } from './dto';
 
 // Entities
 import { User } from './entities/user.entity';
@@ -76,6 +74,15 @@ export class AuthService {
         return {
             token: this.getJwtToken({ id: user.id }),
             user: rest
+        };
+    }
+
+    async register(registerUserDto: RegisterUserDto): Promise<LoginResponse> {
+        const user = await this.create(registerUserDto);
+
+        return {
+            token: this.getJwtToken({ id: user._id }),
+            user
         };
     }
 
