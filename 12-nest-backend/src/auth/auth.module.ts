@@ -1,4 +1,6 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { JwtModule } from '@nestjs/jwt';
 import { MongooseModule } from '@nestjs/mongoose';
 
 // Controllers
@@ -15,6 +17,12 @@ import { AuthService } from './auth.service';
         AuthController
     ],
     imports: [
+        ConfigModule.forRoot(),
+        JwtModule.register({
+            global: true,
+            secret: process.env.JWT_SEED,
+            signOptions: { expiresIn: '6h' }
+        }),
         MongooseModule.forFeature([
             {
                 name: User.name,
