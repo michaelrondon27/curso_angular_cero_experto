@@ -1,10 +1,11 @@
-import { BadRequestException, Injectable, InternalServerErrorException } from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import * as bcryptjs from 'bcryptjs';
 import { Model } from 'mongoose';
 
 // DTOs
 import { CreateUserDto } from './dto/create-user.dto';
+import { LoginDto } from './dto/login.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
 
 // Entities
@@ -46,11 +47,31 @@ export class AuthService {
         return `This action returns a #${id} auth`;
     }
 
-    update(id: number, updateAuthDto: UpdateAuthDto) {
-        return `This action updates a #${id} auth`;
+    async login(loginDto: LoginDto) {
+        const { email, password } = loginDto;
+        const user = await this.userModel.findOne({ email });
+
+        if (!user) {
+            throw new UnauthorizedException('Not valid credentials');
+        }
+
+        if (!bcryptjs.compareSync(password, user.password)) {
+            throw new UnauthorizedException('Not valid credentials');
+        }
+
+        const { password:_, ...rest } = user.toJSON();
+
+        return {
+            user: rest
+        };
     }
 
     remove(id: number) {
         return `This action removes a #${id} auth`;
     }
+
+    update(id: number, updateAuthDto: UpdateAuthDto) {
+        return `This action updates a #${id} auth`;
+    }
+
 }
