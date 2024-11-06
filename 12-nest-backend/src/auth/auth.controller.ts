@@ -1,10 +1,16 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Request } from '@nestjs/common';
 
 // DTOs
 import { CreateUserDto, LoginDto, RegisterUserDto, UpdateAuthDto } from './dto';
 
+// Entities
+import { User } from './entities/user.entity';
+
 // Guards
 import { AuthGuard } from './guards/auth.guard';
+
+// Interfaces
+import { LoginResponse } from './interfaces/login-response';
 
 // Services
 import { AuthService } from './auth.service';
@@ -15,6 +21,17 @@ export class AuthController {
     constructor(
         private readonly authService: AuthService
     ) {}
+
+    @UseGuards(AuthGuard)
+    @Get('check-token')
+    checkToken(@Request() req: Request): LoginResponse {
+        const user = req['user'] as User;
+
+        return {
+            token: this.authService.getJwtToken({ id: user._id }),
+            user
+        }
+    }
 
     @Post()
     create(@Body() createUserDto: CreateUserDto) {
