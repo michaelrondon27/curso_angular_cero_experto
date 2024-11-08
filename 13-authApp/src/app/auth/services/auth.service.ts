@@ -2,8 +2,14 @@ import { Injectable, WritableSignal, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 
+// Enums
+import { AuthStatus } from '../enums';
+
 // Environments
 import { environment } from '@env/environments';
+
+// Interfaces
+import { User } from '../interfaces';
 
 @Injectable({
     providedIn: 'root'
@@ -14,8 +20,8 @@ export class AuthService {
 
     private readonly baseUrl: string = environment.baseUrl;
 
-    private _authStatus : WritableSignal<AuthStatus> = signal<AuthStatus>();
-    private _currentUser: WritableSignal<User> = signal<User>(null);
+    private _authStatus : WritableSignal<AuthStatus> = signal<AuthStatus>(AuthStatus.checking);
+    private _currentUser: WritableSignal<User | null> = signal<User | null>(null);
 
     constructor() { }
 
