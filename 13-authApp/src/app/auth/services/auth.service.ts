@@ -1,6 +1,6 @@
-import { Injectable, WritableSignal, inject, signal } from '@angular/core';
+import { Injectable, Signal, WritableSignal, computed, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable, map, of, tap } from 'rxjs';
 
 // Enums
 import { AuthStatus } from '../enums';
@@ -9,7 +9,7 @@ import { AuthStatus } from '../enums';
 import { environment } from '@env/environments';
 
 // Interfaces
-import { User } from '../interfaces';
+import { LoginResponse, User } from '../interfaces';
 
 @Injectable({
     providedIn: 'root'
@@ -23,10 +23,25 @@ export class AuthService {
     private _authStatus : WritableSignal<AuthStatus> = signal<AuthStatus>(AuthStatus.checking);
     private _currentUser: WritableSignal<User | null> = signal<User | null>(null);
 
+    public authStatus : Signal<WritableSignal<AuthStatus>> = computed(() => this._authStatus);
+    public currentUser: Signal<WritableSignal<User | null>> = computed(() => this._currentUser);
+
     constructor() { }
 
     login(email: string, password: string): Observable<boolean> {
-        return of(true);
+        const url: string = `${ this.baseUrl }/auth/login`;
+        const body = { email, password };
+
+        return this.httpClient.post<LoginResponse>(url, body)
+            .pipe(
+                tap(({ token, user }) => {
+                    this._authStatus.set(AuthStatus.authenticated);
+                    this._currentUser.set(user);
+
+                    localStorage.setItem('token', token);
+                }),
+                map(() => true)
+            );
     }
 
 }
