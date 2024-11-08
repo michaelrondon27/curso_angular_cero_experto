@@ -1,6 +1,6 @@
 import { Injectable, Signal, WritableSignal, computed, inject, signal } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, map, of, tap } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, catchError, map, tap, throwError } from 'rxjs';
 
 // Enums
 import { AuthStatus } from '../enums';
@@ -40,7 +40,8 @@ export class AuthService {
 
                     localStorage.setItem('token', token);
                 }),
-                map(() => true)
+                map(() => true),
+                catchError((err: HttpErrorResponse) => throwError(() => err.error.message))
             );
     }
 
