@@ -23,8 +23,8 @@ export class AuthService {
     private _authStatus : WritableSignal<AuthStatus> = signal<AuthStatus>(AuthStatus.checking);
     private _currentUser: WritableSignal<User | null> = signal<User | null>(null);
 
-    public authStatus : Signal<WritableSignal<AuthStatus>> = computed(() => this._authStatus);
-    public currentUser: Signal<WritableSignal<User | null>> = computed(() => this._currentUser);
+    public authStatus : Signal<AuthStatus> = computed(() => this._authStatus());
+    public currentUser: Signal<User | null> = computed(() => this._currentUser());
 
     constructor() { }
 
