@@ -26,7 +26,9 @@ export class AuthService {
     public authStatus : Signal<AuthStatus> = computed(() => this._authStatus());
     public currentUser: Signal<User | null> = computed(() => this._currentUser());
 
-    constructor() { }
+    constructor() {
+        this.checkAuthStatus().subscribe();
+    }
 
     checkAuthStatus(): Observable<boolean> {
         const url: string = `${ this.baseUrl }/Auth/check-token`;
