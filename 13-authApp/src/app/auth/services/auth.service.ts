@@ -39,14 +39,7 @@ export class AuthService {
         const headers: HttpHeaders = new HttpHeaders().set('Authorization', `Bearer ${ token }`);
 
         return this.httpClient.get<CheckTokenResponse>(url, { headers }).pipe(
-            map(({ token, user }) => {
-                this._authStatus.set(AuthStatus.authenticated);
-                this._currentUser.set(user);
-
-                localStorage.setItem('token', token);
-
-                return true;
-            }),
+            map(({ token, user }) => this.setAuthentication(token, user)),
             catchError(() => {
                 this._authStatus.set(AuthStatus.notAuthenticated);
 
@@ -61,15 +54,18 @@ export class AuthService {
 
         return this.httpClient.post<LoginResponse>(url, body)
             .pipe(
-                tap(({ token, user }) => {
-                    this._authStatus.set(AuthStatus.authenticated);
-                    this._currentUser.set(user);
-
-                    localStorage.setItem('token', token);
-                }),
-                map(() => true),
+                map(({ token, user }) => this.setAuthentication(token, user)),
                 catchError((err: HttpErrorResponse) => throwError(() => err.error.message))
             );
+    }
+
+    private setAuthentication(token: string, user: User): boolean {
+        this._authStatus.set(AuthStatus.authenticated);
+        this._currentUser.set(user);
+
+        localStorage.setItem('token', token);
+
+        return true;
     }
 
 }
