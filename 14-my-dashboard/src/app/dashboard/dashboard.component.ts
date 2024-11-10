@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 // Components
-import { SidemenuComponent } from '../shared/sidemenu/sidemenu.component';
+import { SidemenuComponent } from '@shared/sidemenu/sidemenu.component';
 
 @Component({
     standalone: true,
