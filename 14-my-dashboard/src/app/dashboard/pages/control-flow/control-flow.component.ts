@@ -1,5 +1,7 @@
 import { Component, WritableSignal, signal } from '@angular/core';
 
+type Grade = 'A' | 'B' | 'F';
+
 @Component({
     standalone: true,
     imports: [],
@@ -8,6 +10,7 @@ import { Component, WritableSignal, signal } from '@angular/core';
 })
 export default class ControlFlowComponent {
 
+    public grade      : WritableSignal<Grade> = signal<Grade>('A');
     public showContent: WritableSignal<boolean> = signal<boolean>(false);
 
     toggleContent(): void {
