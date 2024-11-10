@@ -16,4 +16,8 @@ export class DashboardLayoutComponent {
 
     public user: Signal<User | null> = computed(() => this.authService.currentUser());
 
+    onLogout(): void {
+        this.authService.logout();
+    }
+
 }

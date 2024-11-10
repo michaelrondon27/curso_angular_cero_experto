@@ -35,6 +35,7 @@ export class AuthService {
         const token: string | null = localStorage.getItem('token');
 
         if (!token) {
+            this.logout();
             return of(false);
         }
 
@@ -59,6 +60,12 @@ export class AuthService {
                 map(({ token, user }) => this.setAuthentication(token, user)),
                 catchError((err: HttpErrorResponse) => throwError(() => err.error.message))
             );
+    }
+
+    logout(): void {
+        localStorage.removeItem('token');
+        this._authStatus.set(AuthStatus.notAuthenticated);
+        this._currentUser.set(null);
     }
 
     private setAuthentication(token: string, user: User): boolean {
