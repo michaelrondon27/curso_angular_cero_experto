@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, WritableSignal, signal } from '@angular/core';
 
 @Component({
     standalone: true,
@@ -7,5 +7,11 @@ import { Component } from '@angular/core';
     styles: ``
 })
 export default class ControlFlowComponent {
+
+    public showContent: WritableSignal<boolean> = signal<boolean>(false);
+
+    toggleContent(): void {
+        this.showContent.update(value => !value);
+    }
 
 }
