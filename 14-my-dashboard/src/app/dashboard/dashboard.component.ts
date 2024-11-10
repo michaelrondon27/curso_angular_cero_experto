@@ -1,10 +1,14 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
+// Components
+import { SidemenuComponent } from '../shared/sidemenu/sidemenu.component';
+
 @Component({
     standalone: true,
     imports: [
-        RouterModule
+        RouterModule,
+        SidemenuComponent
     ],
     templateUrl: './dashboard.component.html',
     styles: ``
