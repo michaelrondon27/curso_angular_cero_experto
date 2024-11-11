@@ -2,11 +2,13 @@ import { Component } from '@angular/core';
 
 // Components
 import { HeavyLoadersSlowComponent } from '@shared/heavy-loaders/heavy-loaders-slow.component';
+import { TitleComponent } from '@shared/title/title.component';
 
 @Component({
     standalone: true,
     imports: [
-        HeavyLoadersSlowComponent
+        HeavyLoadersSlowComponent,
+        TitleComponent
     ],
     templateUrl: './defer-views.component.html'
 })
