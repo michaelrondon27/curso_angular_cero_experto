@@ -64,7 +64,10 @@ export const routes: Routes = [
     },
     {
         path: '',
-        redirectTo: '/dashboard',
+        // redirectTo: '/dashboard',
+        redirectTo: (route) => {
+            return '/dashboard';
+        },
         pathMatch: 'full'
     }
 ];
