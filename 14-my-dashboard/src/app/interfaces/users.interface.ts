@@ -11,7 +11,12 @@ export interface User {
     last_name : string;
 }
 
-export interface Users {
+export interface UserResponse {
+    data       : User;
+    support    : Support;
+}
+
+export interface UsersResponse {
     data       : User[];
     page       : number;
     per_page   : number;

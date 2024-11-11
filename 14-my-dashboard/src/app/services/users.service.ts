@@ -1,9 +1,9 @@
 import { Injectable, Signal, WritableSignal, computed, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { delay } from 'rxjs';
+import { Observable, delay, map } from 'rxjs';
 
 // Interfaces
-import { User, Users } from '@interfaces/users.interface';
+import type { User, UserResponse, UsersResponse } from '@interfaces/users.interface';
 
 interface State {
     loading: boolean;
@@ -23,7 +23,7 @@ export class UsersService {
     public users  : Signal<User[]> = computed<User[]>(() => this.#state().users);
 
     constructor() {
-        this.httpClient.get<Users>('https://reqres.in/api/users')
+        this.httpClient.get<UsersResponse>('https://reqres.in/api/users')
             .pipe(delay(1500))
             .subscribe(res => {
                 this.#state.set({
@@ -31,6 +31,14 @@ export class UsersService {
                     users: res.data
                 });
             });
+    }
+
+    getUserById(id: string): Observable<User> {
+        return this.httpClient.get<UserResponse>(`https://reqres.in/api/users/${ id }`)
+            .pipe(
+                delay(1500),
+                map(resp => resp.data)
+            );
     }
 
 }
