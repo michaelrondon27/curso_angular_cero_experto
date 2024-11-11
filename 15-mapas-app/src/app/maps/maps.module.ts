@@ -1,11 +1,16 @@
 import { NgModule } from '@angular/core';
 
 // Components
-import { MapScreenComponent } from './screens/map-screen/map-screen.component';
+import { LoadingComponent } from './components/loading/loading.component';
+import { MapViewComponent } from './components/map-view/map-view.component';
 
+// Screens
+import { MapScreenComponent } from './screens/map-screen/map-screen.component';
 @NgModule({
     declarations: [
-        MapScreenComponent
+        LoadingComponent,
+        MapScreenComponent,
+        MapViewComponent
     ],
     exports: [
         MapScreenComponent
