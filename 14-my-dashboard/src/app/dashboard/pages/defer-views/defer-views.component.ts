@@ -1,10 +1,14 @@
 import { Component } from '@angular/core';
 
+// Components
+import { HeavyLoadersSlowComponent } from '@shared/heavy-loaders/heavy-loaders-slow.component';
+
 @Component({
     standalone: true,
-    imports: [],
-    templateUrl: './defer-views.component.html',
-    styles: ``
+    imports: [
+        HeavyLoadersSlowComponent
+    ],
+    templateUrl: './defer-views.component.html'
 })
 export default class DeferViewsComponent {
 
