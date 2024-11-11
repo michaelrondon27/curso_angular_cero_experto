@@ -11,6 +11,8 @@ type Grade = 'A' | 'B' | 'F';
 export default class ControlFlowComponent {
 
     public grade      : WritableSignal<Grade> = signal<Grade>('A');
+    public frameworks : WritableSignal<string[]> = signal<string[]>(['Angular', 'Qwik', 'Svelte', 'React', 'Vue']);
+    public frameworks2: WritableSignal<string[]> = signal<string[]>([]);
     public showContent: WritableSignal<boolean> = signal<boolean>(false);
 
     toggleContent(): void {
