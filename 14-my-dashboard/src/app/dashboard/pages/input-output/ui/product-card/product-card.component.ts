@@ -1,4 +1,7 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EffectRef, InputSignal, OutputEmitterRef, effect, input, output } from '@angular/core';
+
+// Interfaces
+import { Product } from '@interfaces/product.interface';
 
 @Component({
     selector: 'app-product-card',
@@ -9,5 +12,17 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 })
 
 export class ProductCardComponent {
+
+    public product: InputSignal<Product> = input.required<Product>();
+
+    public onIncrementQuantity: OutputEmitterRef<number> = output<number>();
+
+    public loginEffect: EffectRef = effect(() => {
+        console.log(this.product().name);
+    });
+
+    incrementQuantity(): void {
+        this.onIncrementQuantity.emit(this.product().quantity + 1);
+    }
 
 }
