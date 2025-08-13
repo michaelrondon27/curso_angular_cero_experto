@@ -5,15 +5,16 @@
     "compilerOptions": {
         "strict": true,
         "noImplicitOverride": true,
-        "noPropertyAccessFromIndexSignature": true,
-        "noImplicitReturns": true,
+        "noPropertyAccessFromIndexSignature": false,
+        "noImplicitReturns": false,
         "noFallthroughCasesInSwitch": true,
         "skipLibCheck": true,
         "isolatedModules": true,
         "experimentalDecorators": true,
+        "moduleResolution": "bundler",
         "importHelpers": true,
         "target": "ES2022",
-        "module": "preserve"
+        "module": "es2022"
     },
     "angularCompilerOptions": {
         "enableI18nLegacyMessageIdFormat": false,
