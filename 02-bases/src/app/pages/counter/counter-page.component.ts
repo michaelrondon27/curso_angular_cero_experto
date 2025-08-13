@@ -1,4 +1,4 @@
-import { Component, signal, WritableSignal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal, WritableSignal } from '@angular/core';
 
 @Component({
     templateUrl: './counter-page.component.html',
@@ -8,7 +8,8 @@ import { Component, signal, WritableSignal } from '@angular/core';
             padding: 5px;
             width: 75px;
         }
-    `
+    `,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CounterPageComponent {
 
