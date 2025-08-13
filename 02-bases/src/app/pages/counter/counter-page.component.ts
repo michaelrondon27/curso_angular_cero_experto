@@ -14,7 +14,7 @@ import { ChangeDetectionStrategy, Component, signal, WritableSignal } from '@ang
 export class CounterPageComponent {
 
     public counter      : number = 10;
-    public counterSignal: WritableSignal<number> = signal(10);
+    public counterSignal: WritableSignal<number> = signal<number>(10);
 
     increaseBy(value: number): void {
         this.counter += value;
