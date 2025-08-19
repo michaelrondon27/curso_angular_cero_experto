@@ -1,4 +1,4 @@
-import { Injectable, signal, WritableSignal } from '@angular/core';
+import { effect, EffectRef, Injectable, signal, WritableSignal } from '@angular/core';
 
 // Services
 import { Character } from '../interfaces/character.interface';
@@ -12,6 +12,10 @@ export class DragonballService {
         { id: 1, name: 'Goku', power: 9001 },
         { id: 2, name: 'Vegeta', power: 8000 }
     ]);
+
+    private _saveToLocalStorage: EffectRef = effect(() => {
+        localStorage.setItem('characters', JSON.stringify(this.characters()));
+    });
 
     addCharacter(character: Character): void {
         this.characters.update((value: Character[]) => [
