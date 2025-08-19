@@ -7,12 +7,13 @@ interface Character {
 }
 
 @Component({
-    templateUrl: './dragonball-page.component.html'
+    templateUrl: './dragonball-super-page.component.html'
 })
-export class DragonballPageComponent {
+export class DragonballSuperPageComponent {
 
     public characters: WritableSignal<Character[]> = signal<Character[]>([
-        { id: 1, name: 'Goku', power: 9001 }
+        { id: 1, name: 'Goku', power: 9001 },
+        { id: 2, name: 'Vegeta', power: 8000 }
     ]);
     public name      : WritableSignal<string> = signal<string>('');
     public power     : WritableSignal<number> = signal<number>(0);
