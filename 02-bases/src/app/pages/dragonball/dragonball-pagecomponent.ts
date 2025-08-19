@@ -17,5 +17,7 @@ export class DragonballPageComponent {
         { id: 3, name: 'Piccolo', power: 3000 },
         { id: 4, name: 'Yamcha', power: 500 }
     ]);
+    public name      : WritableSignal<string> = signal<string>('Gohan');
+    public power     : WritableSignal<number> = signal<number>(100);
 
 }
