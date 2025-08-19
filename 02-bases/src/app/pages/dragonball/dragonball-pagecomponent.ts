@@ -20,4 +20,28 @@ export class DragonballPageComponent {
     public name      : WritableSignal<string> = signal<string>('Gohan');
     public power     : WritableSignal<number> = signal<number>(100);
 
+    addCharacter(): void {
+        if (!this.name() || !this.power() || this.power() <= 0) {
+            return;
+        }
+
+        const newCharacter: Character = {
+            id: this.characters().length + 1,
+            name: this.name(),
+            power: this.power()
+        };
+
+        this.characters.update((value: Character[]) => [
+            ...value,
+            newCharacter
+        ]);
+
+        this.resetFields();
+    }
+
+    resetFields(): void {
+        this.name.set('');
+        this.power.set(0);
+    }
+
 }

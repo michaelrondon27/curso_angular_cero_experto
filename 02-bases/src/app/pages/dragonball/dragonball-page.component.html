@@ -9,7 +9,6 @@
         <input
             #txtName=""
             class="form-control"
-            (change)="name.set(txtName.value)"
             (input)="name.set(txtName.value)"
             placeholder="Nombre"
             type="text"
@@ -17,13 +16,18 @@
         />
 
         <input
+            #txtPower
             class="form-control mt-2"
+            (input)="power.set(+txtPower.value)"
             placeholder="Poder"
             type="number"
             [value]="power()"
         />
 
-        <button class="btn btn-primary mt-2">
+        <button
+            class="btn btn-primary mt-2"
+            (click)="addCharacter()"
+        >
             Agregar
         </button>
     </div>
