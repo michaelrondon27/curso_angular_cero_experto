@@ -11,5 +11,6 @@ import { Character } from '../../../interfaces/character.interface';
 export class CharacterListComponent {
 
     public characters: InputSignal<Character[]> = input.required<Character[]>();
+    public listName  : InputSignal<string> = input.required<string>();
 
 }
