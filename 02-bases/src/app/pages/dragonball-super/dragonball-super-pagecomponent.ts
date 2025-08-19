@@ -1,12 +1,15 @@
 import { Component, signal, WritableSignal } from "@angular/core";
 
-interface Character {
-    id   : number;
-    name : string;
-    power: number;
-}
+// Components
+import { CharacterListComponent } from "../../components/dragonball/character-list/character-list.component";
+
+// interfaces
+import { Character } from "../../interfaces/character.interface";
 
 @Component({
+    imports: [
+        CharacterListComponent
+    ],
     templateUrl: './dragonball-super-page.component.html'
 })
 export class DragonballSuperPageComponent {
