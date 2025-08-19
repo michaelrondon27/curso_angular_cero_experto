@@ -1,4 +1,4 @@
-import { Component, signal, WritableSignal } from "@angular/core";
+import { Component, computed, inject, Signal } from "@angular/core";
 
 // Components
 import { CharacterAddComponent } from "../../components/dragonball/character-add/character-add.component";
@@ -6,6 +6,9 @@ import { CharacterListComponent } from "../../components/dragonball/character-li
 
 // interfaces
 import { Character } from "../../interfaces/character.interface";
+
+// Services
+import { DragonballService } from "../../services/dragonball.service";
 
 @Component({
     imports: [
@@ -16,16 +19,12 @@ import { Character } from "../../interfaces/character.interface";
 })
 export class DragonballSuperPageComponent {
 
-    public characters: WritableSignal<Character[]> = signal<Character[]>([
-        { id: 1, name: 'Goku', power: 9001 },
-        { id: 2, name: 'Vegeta', power: 8000 }
-    ]);
+    private _dragonballService: DragonballService = inject(DragonballService);
+
+    public characters: Signal<Character[]> = computed<Character[]>(() => this._dragonballService.characters());
 
     addCharacter(character: Character): void {
-        this.characters.update((value: Character[]) => [
-            ...value,
-            character
-        ]);
+        this._dragonballService.addCharacter(character);
     }
 
 }
