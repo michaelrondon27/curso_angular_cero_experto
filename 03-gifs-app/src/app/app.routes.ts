@@ -6,6 +6,10 @@ export const routes: Routes = [
         loadComponent: () => import('./gifs/pages/dashboard-page/dashboard-page.component'),
         children: [
             {
+                path: 'history/:query',
+                loadComponent: () => import('./gifs/pages/gif-history-page/gif-history-page.component')
+            },
+            {
                 path: 'search',
                 loadComponent: () => import('./gifs/pages/search-page/search-page.component')
             },
