@@ -1,6 +1,6 @@
-import { inject, Injectable, signal, WritableSignal } from '@angular/core';
+import { computed, inject, Injectable, Signal, signal, WritableSignal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, Observable } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 
 // Environments
 import { environment } from '@environments/environment';
@@ -19,8 +19,12 @@ export class GifsService {
 
     private _httpClient: HttpClient = inject(HttpClient);
 
+    private _searchHistory: WritableSignal<Record<string, Gif[]>> = signal<Record<string, Gif[]>>({});
+
     public trendingGifs       : WritableSignal<Gif[]> = signal<Gif[]>([]);
     public trendingGifsLoading: WritableSignal<boolean> = signal<boolean>(true);
+
+    public searchHistoryKeys: Signal<string[]> = computed<string[]>(() => Object.keys(this._searchHistory()));
 
     constructor() {
         this.loadTrendingGifs();
@@ -50,7 +54,13 @@ export class GifsService {
                 q: query
             }
         }).pipe(
-            map((resp: GiphyResponse) => GifMapper.mapGiphyItemsToGifArray(resp.data))
+            map((resp: GiphyResponse) => GifMapper.mapGiphyItemsToGifArray(resp.data)),
+            tap((items: Gif[]) => {
+                this._searchHistory.update((history: Record<string, Gif[]>) => ({
+                    ...history,
+                    [query.toLowerCase()]: items
+                }));
+            })
         );
     }
 

@@ -1,5 +1,8 @@
-import { ChangeDetectionStrategy, Component, signal, WritableSignal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, Signal, signal, WritableSignal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+
+// Services
+import { GifsService } from 'src/app/gifs/services/gifs.service';
 
 interface MenuOptions {
     icon    : string;
@@ -19,6 +22,8 @@ interface MenuOptions {
 })
 export class SideMenuOptionsComponent {
 
+    private _gifsService: GifsService = inject(GifsService);
+
     public menuOptions: WritableSignal<MenuOptions[]> = signal<MenuOptions[]>([
         {
             icon: 'fa-solid fa-chart-line',
@@ -33,5 +38,7 @@ export class SideMenuOptionsComponent {
             subLabel: 'Buscar gifs'
         }
     ]);
+
+    public searchHistoryKeys: Signal<string[]> = computed<string[]>(() => this._gifsService.searchHistoryKeys());
 
 }
