@@ -30,6 +30,10 @@ export class GifsService {
         this.loadTrendingGifs();
     }
 
+    getHistoryGifs(query: string): Gif[] {
+        return this._searchHistory()[query] ?? [];
+    }
+
     loadTrendingGifs(): void {
         this._httpClient.get<GiphyResponse>(`${ environment.giphyUrl }/gifs/trending`, {
             params: {

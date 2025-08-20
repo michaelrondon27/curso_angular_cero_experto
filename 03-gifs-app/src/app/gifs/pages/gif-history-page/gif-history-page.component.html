@@ -1,1 +1,7 @@
-<p>gif-history-page works!</p>,
+<h3 class="font-bold mt-4 text-2xl">Mostrando: {{ query() }}</h3>
+
+<hr />
+
+<div class="py-5">
+    <gifs-list [gifs]="gifsByKey()" />
+</div>
