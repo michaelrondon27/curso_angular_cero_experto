@@ -41,4 +41,20 @@ export class GifsService {
         });
     }
 
+    searchGifs(query: string): void {
+        this._httpClient.get<GiphyResponse>(`${ environment.giphyUrl }/gifs/search`, {
+            params: {
+                api_key: environment.giphyApiKey,
+                limit: 20,
+                q: query
+            }
+        }).subscribe({
+            next: (resp: GiphyResponse) => {
+                const gifs = GifMapper.mapGiphyItemsToGifArray(resp.data);
+
+                console.log(gifs)
+            }
+        });
+    }
+
 }
