@@ -3,6 +3,7 @@
 {
     "compileOnSave": false,
     "compilerOptions": {
+        "baseUrl": ".",
         "strict": true,
         "noImplicitOverride": true,
         "noPropertyAccessFromIndexSignature": false,
@@ -14,7 +15,10 @@
         "moduleResolution": "bundler",
         "importHelpers": true,
         "target": "ES2022",
-        "module": "es2022"
+        "module": "es2022",
+        "paths": {
+            "@environments/*": ["src/environments/*"]
+        }
     },
     "angularCompilerOptions": {
         "enableI18nLegacyMessageIdFormat": false,
