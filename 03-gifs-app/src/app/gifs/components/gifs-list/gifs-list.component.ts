@@ -3,6 +3,9 @@ import { ChangeDetectionStrategy, Component, input, InputSignal } from '@angular
 // Components
 import { GifsListItemComponent } from './gifs-list-item/gifs-list-item.component';
 
+// Interfaces
+import { Gif } from '../../interfaces/gif.interface';
+
 @Component({
     selector: 'gifs-list',
     imports: [
@@ -13,6 +16,6 @@ import { GifsListItemComponent } from './gifs-list-item/gifs-list-item.component
 })
 export class GifsListComponent {
 
-    public gifs: InputSignal<string[]> = input.required<string[]>();
+    public gifs: InputSignal<Gif[]> = input.required<Gif[]>();
 
 }
