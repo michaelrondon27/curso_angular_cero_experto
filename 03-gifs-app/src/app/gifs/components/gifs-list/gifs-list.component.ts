@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, InputSignal } from '@angular/core';
 
 // Components
 import { GifsListItemComponent } from './gifs-list-item/gifs-list-item.component';
@@ -11,4 +11,8 @@ import { GifsListItemComponent } from './gifs-list-item/gifs-list-item.component
     templateUrl: './gifs-list.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GifsListComponent { }
+export class GifsListComponent {
+
+    public gifs: InputSignal<string[]> = input.required<string[]>();
+
+}
