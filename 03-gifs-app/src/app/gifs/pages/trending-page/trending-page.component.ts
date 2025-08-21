@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, inject, Signal } from '@angular/core';
 
 // Components
-import { GifsListComponent } from '../../components/gifs-list/gifs-list.component';
+import { GifsListItemComponent } from '../../components/gifs-list/gifs-list-item/gifs-list-item.component';
 
 // Interfaces
 import { Gif } from '../../interfaces/gif.interface';
@@ -12,7 +12,7 @@ import { GifsService } from '../../services/gifs.service';
 @Component({
     selector: 'app-trending-page',
     imports: [
-        GifsListComponent
+        GifsListItemComponent
     ],
     templateUrl: './trending-page.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -21,6 +21,6 @@ export default class TrendingPageComponent {
 
     private _gifsService: GifsService = inject(GifsService);
 
-    public gifs: Signal<Gif[]> = computed<Gif[]>(() => this._gifsService.trendingGifs());
+    public gifs: Signal<Gif[][]> = computed<Gif[][]>(() => this._gifsService.trendingGifsGroup());
 
 }

@@ -34,6 +34,15 @@ export class GifsService {
     public trendingGifsLoading: WritableSignal<boolean> = signal<boolean>(true);
 
     public searchHistoryKeys: Signal<string[]> = computed<string[]>(() => Object.keys(this._searchHistory()));
+    public trendingGifsGroup: Signal<Gif[][]> = computed<Gif[][]>(() => {
+        const groups: Gif[][] = [];
+
+        for (let i = 0; i < this.trendingGifs().length; i += 3) {
+            groups.push(this.trendingGifs().slice(i, i + 3));
+        }
+
+        return groups;
+    });
 
     private _saveGifsToLocalStorage: EffectRef = effect(() => {
         const historyString: string = JSON.stringify(this._searchHistory());
