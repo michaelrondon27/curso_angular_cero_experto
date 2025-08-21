@@ -1,8 +1,7 @@
-<!-- <div class="py-5">
-    <gifs-list [gifs]="gifs()" />
-</div> -->
-
-<div class="gap-4 grid grid-cols-2 md:grid-cols-4 pt-5">
+<div
+    #groupDiv
+    class="gap-4 grid grid-cols-2 h-screen md:grid-cols-4 overflow-y-scroll pt-5"
+>
     @for (group of gifs(); track $index) {
         <div class="gap-4 grid">
             @for (gif of group; track gif.id) {
