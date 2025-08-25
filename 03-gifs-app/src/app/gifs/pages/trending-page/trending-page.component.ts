@@ -20,17 +20,22 @@ export default class TrendingPageComponent {
 
     private _scrollDivRef: Signal<ElementRef<HTMLDivElement> | undefined> = viewChild<ElementRef>('groupDiv');
 
-    onScroll(): void {
+    onScroll(event: Event): void {
         const scrollDiv: HTMLDivElement | undefined = this._scrollDivRef()?.nativeElement;
 
         if (!scrollDiv) {
             return;
         }
 
+
         const clientHeight: number = scrollDiv.clientHeight;
         const scrollHeight: number = scrollDiv.scrollHeight;
         const scrollTop   : number = scrollDiv.scrollTop;
         const isAtbottom  : boolean = scrollTop + clientHeight + 300 >= scrollHeight;
+
+        if (isAtbottom) {
+            this._gifsService.loadTrendingGifs();
+        }
     }
 
 }
