@@ -5,4 +5,4 @@ import { Component } from '@angular/core';
     imports: [],
     templateUrl: './by-capital.component.html'
 })
-export class ByCapitalComponent { }
+export default class ByCapitalComponent { }
