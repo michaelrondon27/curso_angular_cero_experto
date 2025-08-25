@@ -100,7 +100,7 @@ export interface RestCountry {
     latlng      : number[];
     maps        : Maps;
     name        : Name;
-    populatoin  : number;
+    population  : number;
     postalCode? : PostalCode;
     region      : string;
     startOfWeek : string;
