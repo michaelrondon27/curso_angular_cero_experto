@@ -18,10 +18,19 @@ export default class TrendingPageComponent {
 
     public gifs: Signal<Gif[][]> = computed<Gif[][]>(() => this._gifsService.trendingGifsGroup());
 
-    private _scrollDivRef: Signal<ElementRef<any> | undefined> = viewChild<ElementRef>('groupDiv');
+    private _scrollDivRef: Signal<ElementRef<HTMLDivElement> | undefined> = viewChild<ElementRef>('groupDiv');
 
     onScroll(): void {
-        console.log(event)
+        const scrollDiv: HTMLDivElement | undefined = this._scrollDivRef()?.nativeElement;
+
+        if (!scrollDiv) {
+            return;
+        }
+
+        const clientHeight: number = scrollDiv.clientHeight;
+        const scrollHeight: number = scrollDiv.scrollHeight;
+        const scrollTop   : number = scrollDiv.scrollTop;
+        const isAtbottom  : boolean = scrollTop + clientHeight + 300 >= scrollHeight;
     }
 
 }
