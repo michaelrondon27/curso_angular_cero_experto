@@ -28,6 +28,11 @@ export default class ByCapitalPageComponent {
 
     onSearch(query: string): void {
         this._countrySercice.searchByCapital(query).subscribe({
+            error: (err) => {
+                this.isLoading.set(false);
+                this.countries.set([]);
+                this.hasError.set(err);
+            },
             next: (countries: Country[]) => {
                 this.countries.set(countries);
                 this.isLoading.set(false);
