@@ -1,6 +1,6 @@
 import { Component, inject, ResourceRef, signal, WritableSignal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { of } from 'rxjs';
+import { catchError, of } from 'rxjs';
 
 // Components
 import { CountryListComponent } from '../../components/country-list/country-list.component';
@@ -33,7 +33,9 @@ export default class ByCountryPageComponent {
                 return of([]);
             }
 
-            return this._countrySercice.searchByCountry(params.query);
+            return this._countrySercice.searchByCountry(params.query).pipe(
+                catchError(() => of([]))
+            );
         }
     });
 

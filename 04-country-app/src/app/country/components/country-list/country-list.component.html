@@ -41,6 +41,30 @@
                     </td>
                 </tr>
             }
+
+            @if (errorMessage()) {
+                <tr>
+                    <td class="text-center" colspan="8">
+                        {{ errorMessage() }}
+                    </td>
+                </tr>
+            }
+
+            @if (isEmpty() && !isLoading()) {
+                <tr>
+                    <td class="text-center" colspan="8">
+                        No se encontraron resultados
+                    </td>
+                </tr>
+            }
+
+            @if (isLoading()) {
+                <tr>
+                    <td class="text-center" colspan="8">
+                        Buscando países
+                    </td>
+                </tr>
+            }
         </tbody>
     </table>
 </section>
