@@ -18,6 +18,17 @@ export class CountryService {
 
     private _hhtpClient: HttpClient = inject(HttpClient);
 
+    searchByAlphaCode(code: string): Observable<Country | undefined> {
+        return this._hhtpClient.get<RestCountry[]>(`${ API_URL }/alpha/${ code }`)
+            .pipe(
+                map((respCountries: RestCountry[]) => CountryMapper.mapRestCountryArrayToCountryArray(respCountries)),
+                map((countries: Country[]) => countries.at(0)),
+                catchError(error => {
+                    return throwError(() => new Error(`No se pudo obtener países con ese código ${ code }`))
+                })
+            );
+    }
+
     searchByCapital(query: string): Observable<Country[]> {
         return this._hhtpClient.get<RestCountry[]>(`${ API_URL }/capital/${ query.toLowerCase() }`)
             .pipe(
