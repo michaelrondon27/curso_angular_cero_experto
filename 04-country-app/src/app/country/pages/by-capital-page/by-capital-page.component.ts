@@ -1,4 +1,5 @@
-import { Component, inject, signal, WritableSignal } from '@angular/core';
+import { Component, inject, resource, ResourceRef, signal, WritableSignal } from '@angular/core';
+import { firstValueFrom } from 'rxjs';
 
 // Components
 import { CountryListComponent } from '../../components/country-list/country-list.component';
@@ -22,22 +23,17 @@ export default class ByCapitalPageComponent {
 
     private _countrySercice: CountryService = inject(CountryService);
 
-    public countries: WritableSignal<Country[]> = signal<Country[]>([]);
-    public hasError : WritableSignal<string | null> = signal<string | null>(null);
-    public isLoading: WritableSignal<boolean> = signal<boolean>(false);
+    public query: WritableSignal<string> = signal<string>('');
 
-    onSearch(query: string): void {
-        this._countrySercice.searchByCapital(query).subscribe({
-            error: (err) => {
-                this.isLoading.set(false);
-                this.countries.set([]);
-                this.hasError.set(err);
-            },
-            next: (countries: Country[]) => {
-                this.countries.set(countries);
-                this.isLoading.set(false);
+    public countryResource: ResourceRef<Country[] | undefined> = resource({
+        loader: async ({ params }) => {
+            if (!params.query) {
+                return [];
             }
-        });
-    }
+
+            return await firstValueFrom(this._countrySercice.searchByCapital(params.query));
+        },
+        params: () => ({ query: this.query() })
+    });
 
 }
