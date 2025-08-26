@@ -1,5 +1,6 @@
-import { Component, inject, resource, ResourceRef, signal, WritableSignal } from '@angular/core';
-import { firstValueFrom } from 'rxjs';
+import { Component, inject, ResourceRef, signal, WritableSignal } from '@angular/core';
+import { rxResource } from '@angular/core/rxjs-interop';
+import { of } from 'rxjs';
 
 // Components
 import { CountryListComponent } from '../../components/country-list/country-list.component';
@@ -25,15 +26,15 @@ export default class ByCapitalPageComponent {
 
     public query: WritableSignal<string> = signal<string>('');
 
-    public countryResource: ResourceRef<Country[] | undefined> = resource({
-        loader: async ({ params }) => {
+    public countryResource: ResourceRef<Country[] | undefined> = rxResource({
+        params: () => ({ query: this.query() }),
+        stream: ({ params }) => {
             if (!params.query) {
-                return [];
+                return of([]);
             }
 
-            return await firstValueFrom(this._countrySercice.searchByCapital(params.query));
-        },
-        params: () => ({ query: this.query() })
+            return this._countrySercice.searchByCountry(params.query);
+        }
     });
 
 }

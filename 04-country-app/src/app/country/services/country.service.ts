@@ -28,4 +28,14 @@ export class CountryService {
             );
     }
 
+    searchByCountry(query: string): Observable<Country[]> {
+        return this._hhtpClient.get<RestCountry[]>(`${ API_URL }/name/${ query.toLowerCase() }`)
+            .pipe(
+                map((respCountries: RestCountry[]) => CountryMapper.mapRestCountryArrayToCountryArray(respCountries)),
+                catchError(error => {
+                    return throwError(() => new Error(`No se pudo obtener países con ese query ${ query }`))
+                })
+            );
+    }
+
 }
