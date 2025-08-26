@@ -5,7 +5,7 @@ import { CountryListComponent } from '../../components/country-list/country-list
 import { SearchInputComponent } from '../../components/search-input/search-input.component';
 
 // Interfaces
-import { RestCountry } from '../../interfaces/rest-countries.interface';
+import { Country } from '../../interfaces/country.interface';
 
 // Services
 import { CountryService } from '../../services/country.service';
@@ -22,13 +22,13 @@ export default class ByCapitalPageComponent {
 
     private _countrySercice: CountryService = inject(CountryService);
 
-    public countries: WritableSignal<RestCountry[]> = signal<RestCountry[]>([]);
+    public countries: WritableSignal<Country[]> = signal<Country[]>([]);
     public hasError : WritableSignal<string | null> = signal<string | null>(null);
     public isLoading: WritableSignal<boolean> = signal<boolean>(false);
 
     onSearch(query: string): void {
         this._countrySercice.searchByCapital(query).subscribe({
-            next: (countries: RestCountry[]) => {
+            next: (countries: Country[]) => {
                 this.countries.set(countries);
                 this.isLoading.set(false);
             }
