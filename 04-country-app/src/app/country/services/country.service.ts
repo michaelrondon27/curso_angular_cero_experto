@@ -9,6 +9,9 @@ import { RestCountry } from '../interfaces/rest-countries.interface';
 // Mappers
 import { CountryMapper } from '../mappers/country.mapper';
 
+// Types
+import { Region } from '../types/region.type';
+
 const API_URL: string = 'https://restcountries.com/v3.1';
 
 @Injectable({
@@ -20,6 +23,7 @@ export class CountryService {
 
     private _queryCacheCapital = new Map<string, Country[]>();
     private _queryCacheCountry = new Map<string, Country[]>();
+    private _queryCacheRegion  = new Map<Region, Country[]>();
 
     searchByAlphaCode(code: string): Observable<Country | undefined> {
         return this._httpClient.get<RestCountry[]>(`${ API_URL }/alpha/${ code }`)
@@ -62,6 +66,21 @@ export class CountryService {
                 tap((countries: Country[]) => this._queryCacheCountry.set(query, countries)),
                 catchError(error => {
                     return throwError(() => new Error(`No se pudo obtener países con ese query ${ query }`))
+                })
+            );
+    }
+
+    searchByRegion(region: Region): Observable<Country[]> {
+        if (this._queryCacheRegion.has(region)) {
+            return of(this._queryCacheRegion.get(region) ?? []);
+        }
+
+        return this._httpClient.get<RestCountry[]>(`${ API_URL }/region/${ region }`)
+            .pipe(
+                map((respCountries: RestCountry[]) => CountryMapper.mapRestCountryArrayToCountryArray(respCountries)),
+                tap((countries: Country[]) => this._queryCacheRegion.set(region, countries)),
+                catchError(error => {
+                    return throwError(() => new Error(`No se pudo obtener países con esa región ${ region }`))
                 })
             );
     }
