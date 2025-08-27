@@ -1,4 +1,4 @@
-import { Component, inject, ResourceRef, signal, WritableSignal } from '@angular/core';
+import { Component, inject, linkedSignal, ResourceRef, signal, WritableSignal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { catchError, of } from 'rxjs';
 
@@ -11,6 +11,7 @@ import { Country } from '../../interfaces/country.interface';
 
 // Services
 import { CountryService } from '../../services/country.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-by-capital-page',
@@ -22,13 +23,17 @@ import { CountryService } from '../../services/country.service';
 })
 export default class ByCapitalPageComponent {
 
+    private _activatedRoute: ActivatedRoute = inject(ActivatedRoute);
     private _countrySercice: CountryService = inject(CountryService);
 
-    public query: WritableSignal<string> = signal<string>('');
+    private _queryParams: WritableSignal<string> = signal<string>(this._activatedRoute.snapshot.queryParamMap.get('query') ?? '');
+
+    public query: WritableSignal<string> = linkedSignal<string>(() => this._queryParams());
 
     public countryResource: ResourceRef<Country[] | undefined> = rxResource({
         params: () => ({ query: this.query() }),
         stream: ({ params }) => {
+            console.log(params)
             if (!params.query) {
                 return of([]);
             }

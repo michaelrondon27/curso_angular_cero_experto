@@ -1,4 +1,4 @@
-import { Component, effect, EffectRef, input, InputSignal, output, OutputEmitterRef, signal, WritableSignal } from '@angular/core';
+import { Component, effect, EffectRef, input, InputSignal, linkedSignal, output, OutputEmitterRef, WritableSignal } from '@angular/core';
 
 @Component({
     selector: 'country-search-input',
@@ -7,9 +7,10 @@ import { Component, effect, EffectRef, input, InputSignal, output, OutputEmitter
 })
 export class SearchInputComponent {
 
-    public inputValue: WritableSignal<string> = signal<string>('');
+    public inputValue: WritableSignal<string> = linkedSignal<string>(() => this.initialValue() ?? '');
 
     public debounceTime: InputSignal<number> = input<number>(300);
+    public initialValue: InputSignal<string> = input<string>('');
     public placeholder : InputSignal<string> = input<string>('Buscar');
 
     public value: OutputEmitterRef<string> = output<string>();
