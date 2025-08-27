@@ -11,7 +11,7 @@ import { Country } from '../../interfaces/country.interface';
 
 // Services
 import { CountryService } from '../../services/country.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'app-by-capital-page',
@@ -24,7 +24,8 @@ import { ActivatedRoute } from '@angular/router';
 export default class ByCapitalPageComponent {
 
     private _activatedRoute: ActivatedRoute = inject(ActivatedRoute);
-    private _countrySercice: CountryService = inject(CountryService);
+    private _countryService: CountryService = inject(CountryService);
+    private _router        : Router = inject(Router);
 
     private _queryParams: WritableSignal<string> = signal<string>(this._activatedRoute.snapshot.queryParamMap.get('query') ?? '');
 
@@ -33,12 +34,17 @@ export default class ByCapitalPageComponent {
     public countryResource: ResourceRef<Country[] | undefined> = rxResource({
         params: () => ({ query: this.query() }),
         stream: ({ params }) => {
-            console.log(params)
             if (!params.query) {
                 return of([]);
             }
 
-            return this._countrySercice.searchByCapital(params.query).pipe(
+            this._router.navigate(['/country/by-capital'], {
+                queryParams: {
+                    query: params.query
+                }
+            });
+
+            return this._countryService.searchByCapital(params.query).pipe(
                 catchError(() => of([]))
             );
         }

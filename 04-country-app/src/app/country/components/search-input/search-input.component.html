@@ -7,6 +7,7 @@
         (keyup.enter)="value.emit(txtSearch.value)"
         [placeholder]="placeholder()"
         type="text"
+        [value]="inputValue()"
     />
 
     <button class="btn btn-primary" (click)="value.emit(txtSearch.value)">

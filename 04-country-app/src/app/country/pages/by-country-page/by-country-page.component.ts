@@ -1,4 +1,5 @@
-import { Component, inject, ResourceRef, signal, WritableSignal } from '@angular/core';
+import { Component, inject, linkedSignal, ResourceRef, signal, WritableSignal } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { catchError, of } from 'rxjs';
 
@@ -22,9 +23,13 @@ import { CountryService } from '../../services/country.service';
 })
 export default class ByCountryPageComponent {
 
-    private _countrySercice: CountryService = inject(CountryService);
+    private _activatedRoute: ActivatedRoute = inject(ActivatedRoute);
+    private _countryService: CountryService = inject(CountryService);
+    private _router        : Router = inject(Router);
 
-    public query: WritableSignal<string> = signal<string>('');
+    private _queryParams: WritableSignal<string> = signal<string>(this._activatedRoute.snapshot.queryParamMap.get('query') ?? '');
+
+    public query: WritableSignal<string> = linkedSignal<string>(() => this._queryParams());
 
     public countryResource: ResourceRef<Country[] | undefined> = rxResource({
         params: () => ({ query: this.query() }),
@@ -33,7 +38,13 @@ export default class ByCountryPageComponent {
                 return of([]);
             }
 
-            return this._countrySercice.searchByCountry(params.query).pipe(
+            this._router.navigate(['/country/by-country'], {
+                queryParams: {
+                    query: params.query
+                }
+            });
+
+            return this._countryService.searchByCountry(params.query).pipe(
                 catchError(() => of([]))
             );
         }

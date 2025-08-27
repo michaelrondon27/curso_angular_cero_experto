@@ -1,4 +1,5 @@
-import { Component, inject, signal, WritableSignal } from '@angular/core';
+import { Component, inject, linkedSignal, signal, WritableSignal } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, of } from 'rxjs';
 import { rxResource } from '@angular/core/rxjs-interop';
 
@@ -20,7 +21,11 @@ import { Region } from '../../types/region.type';
 })
 export default class ByRegionPageComponent {
 
+    private _activatedRoute: ActivatedRoute = inject(ActivatedRoute);
     private _countryService: CountryService = inject(CountryService);
+    private _router        : Router = inject(Router);
+
+    private _queryParams: WritableSignal<string> = signal<string>(this._activatedRoute.snapshot.queryParamMap.get('region') ?? '');
 
     public regions: WritableSignal<Region[]> = signal<Region[]>([
         'Africa',
@@ -30,7 +35,7 @@ export default class ByRegionPageComponent {
         'Oceania',
         'Antarctic',
     ]);
-    public selectedRegion: WritableSignal<Region | null> = signal<Region | null>(null);
+    public selectedRegion: WritableSignal<Region> = linkedSignal<Region>(() => (this._queryParams()) as Region ?? 'Americas');
 
     public countryResource = rxResource({
         params: () => ({ region: this.selectedRegion() }),
@@ -38,6 +43,12 @@ export default class ByRegionPageComponent {
             if (!params.region) {
                 return of([]);
             }
+
+            this._router.navigate(['/country/by-region'], {
+                queryParams: {
+                    region: params.region
+                }
+            });
 
             return this._countryService.searchByRegion(params.region).pipe(
                 catchError(() => of([]))
