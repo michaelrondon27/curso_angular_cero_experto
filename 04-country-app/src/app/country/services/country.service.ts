@@ -18,7 +18,8 @@ export class CountryService {
 
     private _httpClient: HttpClient = inject(HttpClient);
 
-    private _queryCachecapital = new Map<string, Country[]>();
+    private _queryCacheCapital = new Map<string, Country[]>();
+    private _queryCacheCountry = new Map<string, Country[]>();
 
     searchByAlphaCode(code: string): Observable<Country | undefined> {
         return this._httpClient.get<RestCountry[]>(`${ API_URL }/alpha/${ code }`)
@@ -34,14 +35,14 @@ export class CountryService {
     searchByCapital(query: string): Observable<Country[]> {
         query = query.toLowerCase();
 
-        if (this._queryCachecapital.has(query)) {
-            return of(this._queryCachecapital.get(query) ?? []);
+        if (this._queryCacheCapital.has(query)) {
+            return of(this._queryCacheCapital.get(query) ?? []);
         }
 
-        return this._httpClient.get<RestCountry[]>(`${ API_URL }/capital/${ query.toLowerCase() }`)
+        return this._httpClient.get<RestCountry[]>(`${ API_URL }/capital/${ query }`)
             .pipe(
                 map((respCountries: RestCountry[]) => CountryMapper.mapRestCountryArrayToCountryArray(respCountries)),
-                tap((countries: Country[]) => this._queryCachecapital.set(query, countries)),
+                tap((countries: Country[]) => this._queryCacheCapital.set(query, countries)),
                 catchError(error => {
                     return throwError(() => new Error(`No se pudo obtener países con ese query ${ query }`))
                 })
@@ -49,9 +50,16 @@ export class CountryService {
     }
 
     searchByCountry(query: string): Observable<Country[]> {
-        return this._httpClient.get<RestCountry[]>(`${ API_URL }/name/${ query.toLowerCase() }`)
+        query = query.toLowerCase();
+
+        if (this._queryCacheCountry.has(query)) {
+            return of(this._queryCacheCountry.get(query) ?? []);
+        }
+
+        return this._httpClient.get<RestCountry[]>(`${ API_URL }/name/${ query }`)
             .pipe(
                 map((respCountries: RestCountry[]) => CountryMapper.mapRestCountryArrayToCountryArray(respCountries)),
+                tap((countries: Country[]) => this._queryCacheCountry.set(query, countries)),
                 catchError(error => {
                     return throwError(() => new Error(`No se pudo obtener países con ese query ${ query }`))
                 })
