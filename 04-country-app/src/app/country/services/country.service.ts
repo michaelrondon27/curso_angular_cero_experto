@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError, map, Observable, of, throwError } from 'rxjs';
+import { catchError, map, Observable, of, tap, throwError } from 'rxjs';
 
 // Interfaces
 import { Country } from '../interfaces/country.interface';
@@ -16,10 +16,12 @@ const API_URL: string = 'https://restcountries.com/v3.1';
 })
 export class CountryService {
 
-    private _hhtpClient: HttpClient = inject(HttpClient);
+    private _httpClient: HttpClient = inject(HttpClient);
+
+    private _queryCachecapital = new Map<string, Country[]>();
 
     searchByAlphaCode(code: string): Observable<Country | undefined> {
-        return this._hhtpClient.get<RestCountry[]>(`${ API_URL }/alpha/${ code }`)
+        return this._httpClient.get<RestCountry[]>(`${ API_URL }/alpha/${ code }`)
             .pipe(
                 map((respCountries: RestCountry[]) => CountryMapper.mapRestCountryArrayToCountryArray(respCountries)),
                 map((countries: Country[]) => countries.at(0)),
@@ -30,9 +32,16 @@ export class CountryService {
     }
 
     searchByCapital(query: string): Observable<Country[]> {
-        return this._hhtpClient.get<RestCountry[]>(`${ API_URL }/capital/${ query.toLowerCase() }`)
+        query = query.toLowerCase();
+
+        if (this._queryCachecapital.has(query)) {
+            return of(this._queryCachecapital.get(query) ?? []);
+        }
+
+        return this._httpClient.get<RestCountry[]>(`${ API_URL }/capital/${ query.toLowerCase() }`)
             .pipe(
                 map((respCountries: RestCountry[]) => CountryMapper.mapRestCountryArrayToCountryArray(respCountries)),
+                tap((countries: Country[]) => this._queryCachecapital.set(query, countries)),
                 catchError(error => {
                     return throwError(() => new Error(`No se pudo obtener países con ese query ${ query }`))
                 })
@@ -40,7 +49,7 @@ export class CountryService {
     }
 
     searchByCountry(query: string): Observable<Country[]> {
-        return this._hhtpClient.get<RestCountry[]>(`${ API_URL }/name/${ query.toLowerCase() }`)
+        return this._httpClient.get<RestCountry[]>(`${ API_URL }/name/${ query.toLowerCase() }`)
             .pipe(
                 map((respCountries: RestCountry[]) => CountryMapper.mapRestCountryArrayToCountryArray(respCountries)),
                 catchError(error => {
