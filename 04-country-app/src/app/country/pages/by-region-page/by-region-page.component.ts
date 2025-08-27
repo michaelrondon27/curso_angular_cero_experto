@@ -12,6 +12,21 @@ import { CountryService } from '../../services/country.service';
 // Types
 import { Region } from '../../types/region.type';
 
+function validateQueryParams(queryParam: string): Region {
+    queryParam = queryParam.toLowerCase();
+
+    const validRegions: Record<string, Region> = {
+        africa   : 'Africa',
+        americas : 'Americas',
+        asia     : 'Asia',
+        europe   : 'Europe',
+        oceania  : 'Oceania',
+        antarctic: 'Antarctic'
+    };
+
+    return validRegions[queryParam] ?? 'Americas';
+}
+
 @Component({
     selector: 'app-by-region-page',
     imports: [
@@ -35,7 +50,7 @@ export default class ByRegionPageComponent {
         'Oceania',
         'Antarctic',
     ]);
-    public selectedRegion: WritableSignal<Region> = linkedSignal<Region>(() => (this._queryParams()) as Region ?? 'Americas');
+    public selectedRegion: WritableSignal<Region> = linkedSignal<Region>(() => validateQueryParams(this._queryParams()));
 
     public countryResource = rxResource({
         params: () => ({ region: this.selectedRegion() }),
