@@ -33,7 +33,7 @@ export default class ByCapitalPageComponent {
                 return of([]);
             }
 
-            return this._countrySercice.searchByCountry(params.query).pipe(
+            return this._countrySercice.searchByCapital(params.query).pipe(
                 catchError(() => of([]))
             );
         }

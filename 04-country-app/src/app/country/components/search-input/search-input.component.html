@@ -3,6 +3,7 @@
         #txtSearch
         autofocus
         class="input input-bordered mr-2 w-56"
+        (keyup)="inputValue.set(txtSearch.value)"
         (keyup.enter)="value.emit(txtSearch.value)"
         [placeholder]="placeholder()"
         type="text"
