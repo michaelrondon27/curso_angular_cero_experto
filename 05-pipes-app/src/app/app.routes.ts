@@ -9,7 +9,7 @@ export const routes: Routes = [
     {
         path: 'custom',
         loadComponent: () => import('./pages/custom-page/custom-page.component'),
-        title: 'Pipes no tan comunes'
+        title: 'Pipes Personalizados'
     },
     {
         path: 'numbers',
@@ -19,7 +19,7 @@ export const routes: Routes = [
     {
         path: 'uncommon',
         loadComponent: () => import('./pages/uncommon-page/uncommon-page.component'),
-        title: 'Pipes Personalizados'
+        title: 'Pipes no tan comunes'
     },
     {
         path: '**',
