@@ -4,15 +4,27 @@
     <h3 class="font-thin text-xl">Pipes incluidos en Angular</h3>
 </section>
 
-<div class="gap- grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+<div class="gap-4 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
     <app-card title="i18nSelectPipe">
-        <p>Saludos a {{ client().name }}, es un placer {{ client().gender | i18nSelect:invitationMap }} a nuestro evento</p>
+        <p>Saludos a {{ client().name }}, es un placer {{ client().gender | i18nSelect:invitationMap() }} a nuestro evento</p>
 
         <button
             class="btn btn-primary"
             (click)="changeClient()"
         >
             Cambiar cliente
+        </button>
+    </app-card>
+
+    <app-card title="i18nPluralPipe">
+        <p>Actualmente {{ clients().length | i18nPlural:clientsMap() }}</p>
+
+        <button
+            class="btn btn-primary"
+            (click)="deleteClient()"
+            [disabled]="!clients().length"
+        >
+            Borrar cliente
         </button>
     </app-card>
 </div>

@@ -1,5 +1,5 @@
 import { Component, signal, WritableSignal } from '@angular/core';
-import { I18nSelectPipe } from '@angular/common';
+import { I18nPluralPipe, I18nSelectPipe } from '@angular/common';
 
 // Components
 import { CardComponent } from '../../components/card/card.component';
@@ -9,7 +9,7 @@ interface Client {
     age    : number;
     gender : string;
     name   : string;
-}
+};
 
 const client1: Client = {
     address: 'Madrid, Spain',
@@ -29,18 +29,22 @@ const client2: Client = {
     selector: 'app-uncommon-page',
     imports: [
         CardComponent,
+        I18nPluralPipe,
         I18nSelectPipe
     ],
     templateUrl: './uncommon-page.component.html'
 })
 export default class UncommonPageComponent {
 
-    public client: WritableSignal<Client> = signal<Client>(client1);
+    public client       : WritableSignal<Client> = signal<Client>(client1);
+    public clients      : WritableSignal<string[]> = signal<string[]>(['Maria', 'Pedro', 'Fernando', 'Melissa', 'Natalia', 'Andrea', 'Juan', 'Carlos']);
+    public clientsMap   : WritableSignal<Record<string, string>> = signal<Record<string, string>>({
+        '=0': 'no tenemos ningún cliente esperando',
+        '=1': 'hay tenemos un cliente esperando',
+        other: 'hay tenemos # clientes esperando'
+    });
+    public invitationMap: WritableSignal<{ [key: string]: string; }> = signal<{ [key: string]: string; }>({ female: 'invitarla', male: 'invitarlo' });
     
-    public invitationMap = {
-        female: 'invitarla',
-        male: 'invitarlo'
-    };
 
     changeClient(): void {
         if (this.client() === client1) {
@@ -50,6 +54,10 @@ export default class UncommonPageComponent {
         }
 
         this.client.set(client1);
+    }
+
+    deleteClient(): void {
+        this.clients.update((prev: string[]) => prev.slice(1));
     }
 
 }
