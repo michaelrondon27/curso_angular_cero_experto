@@ -1,5 +1,6 @@
 import { Component, signal, WritableSignal } from '@angular/core';
 import { AsyncPipe, I18nPluralPipe, I18nSelectPipe, JsonPipe, KeyValuePipe, SlicePipe } from '@angular/common';
+import { interval, Observable } from 'rxjs';
 
 // Components
 import { CardComponent } from '../../components/card/card.component';
@@ -50,10 +51,12 @@ export default class UncommonPageComponent {
     public invitationMap: WritableSignal<{ [key: string]: string; }> = signal<{ [key: string]: string; }>({ female: 'invitarla', male: 'invitarlo' });
     public profile      : WritableSignal<Client> = signal<Client>({ address: 'Caracas, Venezuela', age: 61, gender: 'male', name: 'Carlos' });
     
+    public myObservableTimer: Observable<number> = interval(2000);
+
     public promise: Promise<string> = new Promise((resolve, reject) => {
         setTimeout(() => {
-            // resolve('Tenemos data en la promesa');
-            reject('Tenemos un error en la data');
+            resolve('Tenemos data en la promesa');
+            // reject('Tenemos un error en la data');
         }, 3500);
     });
 
