@@ -24,22 +24,22 @@
 <div class="divider my-2"></div>
 
 <section class="my-2">
-    <h1 class="font-bold text-2xl">Pipes personalizados en acción</h1>
+    <h1 class="font-bold text-2xl">Filtrnado Por: ordenando por: {{ sortBy() }}</h1>
 
     <div class="flex gap-2 justify-end w-full">
-        <button class="btn btn-primary">
+        <button class="btn btn-primary" (click)="sortBy.set('name')">
             Por nombre
         </button>
 
-        <button class="btn btn-accent">
+        <button class="btn btn-accent" (click)="sortBy.set('canFly')">
             Por volar
         </button>
 
-        <button class="btn btn-secondary">
+        <button class="btn btn-secondary" (click)="sortBy.set('color')">
             Por color
         </button>
 
-        <button class="btn btn-info">
+        <button class="btn btn-info" (click)="sortBy.set('creator')">
             Por creador
         </button>
     </div>
@@ -58,7 +58,7 @@
         </thead>
 
         <tbody>
-            @for (hero of heroes(); track hero.id; let i = $index) {
+            @for (hero of heroes() | heroSortBy:sortBy(); track hero.id; let i = $index) {
                 <tr>
                     <td>{{ i + 1 }}</td>
                     
