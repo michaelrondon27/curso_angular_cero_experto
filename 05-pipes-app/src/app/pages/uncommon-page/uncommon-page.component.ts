@@ -1,5 +1,5 @@
 import { Component, signal, WritableSignal } from '@angular/core';
-import { I18nPluralPipe, I18nSelectPipe, SlicePipe } from '@angular/common';
+import { I18nPluralPipe, I18nSelectPipe, JsonPipe, SlicePipe } from '@angular/common';
 
 // Components
 import { CardComponent } from '../../components/card/card.component';
@@ -31,6 +31,7 @@ const client2: Client = {
         CardComponent,
         I18nPluralPipe,
         I18nSelectPipe,
+        JsonPipe,
         SlicePipe
     ],
     templateUrl: './uncommon-page.component.html'
