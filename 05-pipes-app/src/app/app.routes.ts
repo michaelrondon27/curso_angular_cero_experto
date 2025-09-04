@@ -9,12 +9,12 @@ export const routes: Routes = [
     {
         path: 'custom',
         loadComponent: () => import('./pages/custom-page/custom-page.component'),
-        title: 'Numbers Pipes'
+        title: 'Pipes no tan comunes'
     },
     {
         path: 'numbers',
         loadComponent: () => import('./pages/numbers-page/numbers-page.component'),
-        title: 'Pipes no tan comunes'
+        title: 'Numbers Pipes'
     },
     {
         path: 'uncommon',
