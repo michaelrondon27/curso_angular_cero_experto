@@ -1,5 +1,5 @@
 import { Component, signal, WritableSignal } from '@angular/core';
-import { I18nPluralPipe, I18nSelectPipe, JsonPipe, SlicePipe } from '@angular/common';
+import { I18nPluralPipe, I18nSelectPipe, JsonPipe, KeyValuePipe, SlicePipe } from '@angular/common';
 
 // Components
 import { CardComponent } from '../../components/card/card.component';
@@ -32,6 +32,7 @@ const client2: Client = {
         I18nPluralPipe,
         I18nSelectPipe,
         JsonPipe,
+        KeyValuePipe,
         SlicePipe
     ],
     templateUrl: './uncommon-page.component.html'
@@ -46,6 +47,7 @@ export default class UncommonPageComponent {
         other: 'hay tenemos # clientes esperando'
     });
     public invitationMap: WritableSignal<{ [key: string]: string; }> = signal<{ [key: string]: string; }>({ female: 'invitarla', male: 'invitarlo' });
+    public profile      : WritableSignal<Client> = signal<Client>({ address: 'Caracas, Venezuela', age: 61, gender: 'male', name: 'Carlos' });
     
 
     changeClient(): void {
