@@ -102,18 +102,18 @@
     <h1 class="font-bold text-2xl">
         Locale Actual:
 
-        <span class="badge badge-secondary">ES</span>
+        <span class="badge badge-secondary">{{ localeId() }}</span>
     </h1>
 
-    <button class="btn btn-primary">
+    <button class="btn btn-primary" (click)="changeLocale('en')">
         Change to English
     </button>
 
-    <button class="btn btn-primary">
+    <button class="btn btn-primary" (click)="changeLocale('es')">
         Cambiar a Español
     </button>
 
-    <button class="btn btn-primary">
+    <button class="btn btn-primary" (click)="changeLocale('pl')">
         Zmień na Polski
     </button>
 </div>
