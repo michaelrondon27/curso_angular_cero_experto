@@ -1,5 +1,11 @@
 import { Component, signal, WritableSignal } from '@angular/core';
 
+// Data
+import { heroes } from '../../data/heroes.data';
+
+// Interfaces
+import { Hero } from '../../interfaces/hero.interface';
+
 // Pipes
 import { ToggleCasePipe } from '../../pipes/toggle-case.pipe';
 
@@ -12,6 +18,7 @@ import { ToggleCasePipe } from '../../pipes/toggle-case.pipe';
 })
 export default class CustomPageComponent {
 
+    public heroes   : WritableSignal<Hero[]> = signal<Hero[]>(heroes);
     public name     : WritableSignal<string> = signal<string>('michael rondón');
     public upperCase: WritableSignal<boolean> = signal<boolean>(true);
 

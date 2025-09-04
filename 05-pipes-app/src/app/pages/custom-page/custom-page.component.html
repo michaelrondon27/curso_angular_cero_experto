@@ -20,3 +20,53 @@
         </button>
     </div>
 </div>
+
+<div class="divider my-2"></div>
+
+<section class="my-2">
+    <h1 class="font-bold text-2xl">Pipes personalizados en acción</h1>
+
+    <div class="flex gap-2 justify-end w-full">
+        <button class="btn btn-primary">
+            Por nombre
+        </button>
+
+        <button class="btn btn-accent">
+            Por volar
+        </button>
+
+        <button class="btn btn-secondary">
+            Por color
+        </button>
+
+        <button class="btn btn-info">
+            Por creador
+        </button>
+    </div>
+</section>
+
+<section class="my-5 overflow-x-auto w-full">
+    <table class="table table-xs w-full">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Nombre</th>
+                <th>Puede volar</th>
+                <th>Color</th>
+                <th>Creador</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @for (hero of heroes(); track hero.id; let i = $index) {
+                <tr>
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ hero.name }}</td>
+                    <td>{{ hero.canFly }}</td>
+                    <td>{{ hero.color }}</td>
+                    <td>{{ hero.creator }}</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</section>
