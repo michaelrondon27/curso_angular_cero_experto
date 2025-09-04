@@ -11,6 +11,7 @@ import { Hero } from '../../interfaces/hero.interface';
 import { CanFlyPipe } from '../../pipes/can-fly.pipe';
 import { HeroColorPipe } from '../../pipes/hero-color.pipe';
 import { HeroCreatorPipe } from '../../pipes/hero-creator.pipe';
+import { HeroFilterPipe } from '../../pipes/hero-filter.pipe';
 import { HeroSortByPipe } from '../../pipes/hero-sort-by.pipe';
 import { HeroTextColorPipe } from '../../pipes/hero-text-color.pipe';
 import { ToggleCasePipe } from '../../pipes/toggle-case.pipe';
@@ -21,6 +22,7 @@ import { ToggleCasePipe } from '../../pipes/toggle-case.pipe';
         CanFlyPipe,
         HeroColorPipe,
         HeroCreatorPipe,
+        HeroFilterPipe,
         HeroSortByPipe,
         HeroTextColorPipe,
         TitleCasePipe,
@@ -30,9 +32,10 @@ import { ToggleCasePipe } from '../../pipes/toggle-case.pipe';
 })
 export default class CustomPageComponent {
 
-    public heroes   : WritableSignal<Hero[]> = signal<Hero[]>(heroes);
-    public name     : WritableSignal<string> = signal<string>('michael rondón');
-    public sortBy   : WritableSignal<keyof Hero | null> = signal<keyof Hero | null>(null);
-    public upperCase: WritableSignal<boolean> = signal<boolean>(true);
+    public heroes     : WritableSignal<Hero[]> = signal<Hero[]>(heroes);
+    public name       : WritableSignal<string> = signal<string>('michael rondón');
+    public searchQuery: WritableSignal<string> = signal<string>('');
+    public sortBy     : WritableSignal<keyof Hero | null> = signal<keyof Hero | null>(null);
+    public upperCase  : WritableSignal<boolean> = signal<boolean>(true);
 
 }
