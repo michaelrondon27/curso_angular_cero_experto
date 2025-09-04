@@ -61,9 +61,28 @@
             @for (hero of heroes(); track hero.id; let i = $index) {
                 <tr>
                     <td>{{ i + 1 }}</td>
+                    
                     <td>{{ hero.name }}</td>
-                    <td>{{ hero.canFly }}</td>
-                    <td>{{ hero.color }}</td>
+                    
+                    <td>
+                        <span
+                            class="text-xs w-44"
+                            [class.text-success]="hero.canFly"
+                            [class.text-accent]="!hero.canFly"
+                        >
+                            {{ hero.canFly | canFly }}
+                        </span>
+                    </td>
+                    
+                    <td>
+                        <span
+                            class="text-xs w-44"
+                            [style.color]="hero.color | heroColor"
+                        >
+                            {{ hero.color | heroColor }}
+                        </span>
+                    </td>
+                    
                     <td>{{ hero.creator }}</td>
                 </tr>
             }
