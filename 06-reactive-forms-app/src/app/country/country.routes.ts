@@ -6,3 +6,5 @@ export const countryRoutes: Routes = [
         loadComponent: () => import('./pages/country-page/country-page.component')
     }
 ];
+
+export default countryRoutes;
