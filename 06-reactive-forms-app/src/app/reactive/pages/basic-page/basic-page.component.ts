@@ -1,6 +1,6 @@
-import { Component, signal, WritableSignal } from '@angular/core';
+import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { JsonPipe } from '@angular/common';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-basic-page',
@@ -12,10 +12,12 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 })
 export default class BasicPageComponent {
 
-    public myForm: WritableSignal<FormGroup> = signal<FormGroup>(new FormGroup({
-        inStorage: new FormControl(0),
-        name: new FormControl(''),
-        price: new FormControl(0)
-    }))
+    private _formBuilder: FormBuilder = inject(FormBuilder);
+
+    public myForm: WritableSignal<FormGroup> = signal<FormGroup>(this._formBuilder.group({
+        inStorage: [0],
+        name: [''],
+        price: [0]
+    }));
 
 }
