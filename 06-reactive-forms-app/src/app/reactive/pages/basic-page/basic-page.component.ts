@@ -43,7 +43,21 @@ export default class BasicPageComponent {
     }
 
     isValidField(fieldName: string): boolean | null {
-        return !!this.myForm().controls[fieldName].errors
+        return !!this.myForm().controls[fieldName].errors && this.myForm().controls[fieldName].touched;
+    }
+
+    onSave(): void {
+        if (this.myForm().invalid) {
+            this.myForm().markAllAsTouched();
+            return;
+        }
+
+        console.log(this.myForm().value);
+
+        this.myForm().reset({
+            inStorage: 0,
+            price: 0
+        });
     }
 
 }
