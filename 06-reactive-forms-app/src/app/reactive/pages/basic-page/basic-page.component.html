@@ -4,13 +4,14 @@
 
 <div class="row">
     <div class="col">
-        <form autocomplete="off">
+        <form autocomplete="off" [formGroup]="myForm()">
             <div class="mb-3 row">
                 <label class="col-sm-3 col-form-label">Producto</label>
 
                 <div class="col-sm-9">
                     <input
                         class="form-control"
+                        formControlName="name"
                         placeholder="Nombre del producto"
                         type="text"
                     />
@@ -27,6 +28,7 @@
                 <div class="col-sm-9">
                     <input
                         class="form-control"
+                        formControlName="price"
                         placeholder="Precio del producto"
                         type="number"
                     />
@@ -43,6 +45,7 @@
                 <div class="col-sm-9">
                     <input
                         class="form-control"
+                        formControlName="inStorage"
                         placeholder="Existencias del producto"
                         type="number"
                     />
@@ -52,7 +55,6 @@
                     </span>
                 </div>
             </div>
-
 
             <div class="row">
                 <div class="col">
@@ -74,21 +76,21 @@
 <div class="row">
     <div class="col">
         <span>Valid</span>
-        <pre>{{ 'objeto' | json }}</pre>
+        <pre>{{ myForm().valid| json }}</pre>
 
         <span>Pristine</span>
-        <pre>{{ 'objeto' | json }}</pre>
+        <pre>{{ myForm().pristine| json }}</pre>
 
         <span>Touched</span>
-        <pre>{{ 'objeto' | json }}</pre>
+        <pre>{{ myForm().touched | json }}</pre>
 
         <span>Value</span>
-        <pre>{{ 'objeto' | json }}</pre>
+        <pre>{{ myForm().value | json }}</pre>
 
         <span>Precio</span>
-        <pre>{{ 'objeto' | json }}</pre>
+        <pre>{{ myForm().controls.price.value | json }}</pre>
 
         <span>Producto</span>
-        <pre>{{ 'objeto' | json }}</pre>
+        <pre>{{ myForm().controls.name.value | json }}</pre>
     </div>
 </div>
