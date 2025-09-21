@@ -2,7 +2,11 @@
 
 <hr>
 
-<form autocomplete="off" [formGroup]="myForm()">
+<form
+    autocomplete="off"
+    [formGroup]="myForm()"
+    (ngSubmit)="onSubmit()"
+>
     <div class="mb-3 row">
         <label class="col-sm-3 col-form-label">Nombre</label>
 
@@ -28,6 +32,8 @@
             <div class="input-group">
                 <input
                     class="form-control"
+                    [formControl]="newFavorite()"
+                    (keydown.enter)="onAddToFavorites()"
                     placeholder="Agregar favorito"
                 />
 
@@ -55,6 +61,7 @@
 
                         <button
                             class="btn btn-outline-danger"
+                            (click)="onDeleteFavorite(i)"
                             type="button"
                         >
                             Eliminar
@@ -68,6 +75,12 @@
                     }
                 </div>
             }
+
+            @if (formUtils().isValidField(myForm(), 'favoriteGames')) {
+                <span class="form-text text-danger">
+                    Debe de tener al menos 3 juegos.
+                </span>
+            }
         </div>
     </div>
 
@@ -77,7 +90,6 @@
                 class="btn btn-primary float-end"
                 type="submit"
             >
-                <!-- [disabled]="myForm.invalid" -->
                 Guardar
             </button>
         </div>
@@ -95,5 +107,5 @@
 <br>
 
 <span>Agregar Juego</span>
-<!-- <pre>{{ myForm() | json }}</pre>
-<pre>{{ myForm() | json }}</pre> -->
+<pre>{{ myForm().controls.favoriteGames.errors | json }}</pre>
+<pre>{{ myForm().controls.favoriteGames.value | json }}</pre>
