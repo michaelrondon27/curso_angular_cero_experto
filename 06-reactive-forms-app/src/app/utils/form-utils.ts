@@ -25,6 +25,9 @@ export class FormUtils {
     static getTextErrors(errors: ValidationErrors): string | null {
         for (const key of Object.keys(errors)) {
             switch (key) {
+                case 'email':
+                    return 'El valor ingresado no es correo electrónico';
+
                 case 'min':
                     return `Valor mínimo de ${ errors['min'].min }`;
 
