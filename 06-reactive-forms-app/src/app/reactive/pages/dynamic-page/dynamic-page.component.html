@@ -34,11 +34,13 @@
                     class="form-control"
                     [formControl]="newFavorite()"
                     (keydown.enter)="onAddToFavorites()"
+                    (keydown.enter)="$event.preventDefault()"
                     placeholder="Agregar favorito"
                 />
 
                 <button
                     class="btn btn-outline-primary"
+                    (click)="onAddToFavorites()"
                     type="button"
                 >
                     Agregar favorito
