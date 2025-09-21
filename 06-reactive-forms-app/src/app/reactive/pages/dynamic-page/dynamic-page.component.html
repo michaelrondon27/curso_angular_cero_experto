@@ -13,9 +13,11 @@
                 placeholder="Nombre de la persona"
             />
 
-            <span class="form-text text-danger">
-                error message
-            </span>
+            @if (formUtils().isValidField(myForm(), 'name')) {
+                <span class="form-text text-danger">
+                    {{ formUtils().getFieldError(myForm(), 'name') }}
+                </span>
+            }
         </div>
     </div>
 
@@ -59,9 +61,11 @@
                         </button>
                     </div>
 
-                    <span class="form-text text-danger">
-                        Este campo es requerido
-                    </span>
+                    @if (formUtils().isValidFieldInArray(favoriteGames, i)) {
+                        <span class="form-text text-danger">
+                            {{ formUtils().getFieldErrorInArray(favoriteGames, i) }}
+                        </span>
+                    }
                 </div>
             }
         </div>

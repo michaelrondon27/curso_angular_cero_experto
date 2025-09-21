@@ -2,6 +2,9 @@ import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { JsonPipe } from '@angular/common';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
+// Utils
+import { FormUtils } from '../../../utils/form-utils';
+
 @Component({
     selector: 'app-dynamic-page',
     imports: [
@@ -14,7 +17,8 @@ export default class DynamicPageComponent {
 
     private _formBuilder: FormBuilder = inject(FormBuilder);
 
-    public myForm: WritableSignal<FormGroup> = signal<FormGroup>(this._formBuilder.group({
+    public formUtils: WritableSignal<typeof FormUtils> = signal<typeof FormUtils>(FormUtils);
+    public myForm   : WritableSignal<FormGroup> = signal<FormGroup>(this._formBuilder.group({
         favoriteGames: this._formBuilder.array(
             [
                 ['Metal Gear', [Validators.required]],
