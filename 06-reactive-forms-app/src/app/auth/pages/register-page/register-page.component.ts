@@ -19,11 +19,11 @@ export default class RegisterPageComponent {
 
     public formUtils: WritableSignal<typeof FormUtils> = signal<typeof FormUtils>(FormUtils);
     public myForm   : WritableSignal<FormGroup> = signal<FormGroup>(this._formBuilder.group({
-        email: ['', [Validators.email, Validators.required]],
-        name: ['', [Validators.required]],
+        email: ['', [Validators.pattern(this.formUtils().emailPattern),  Validators.required]],
+        name: ['', [Validators.pattern(this.formUtils().namePattern), Validators.required]],
         password: ['', [Validators.minLength(6), Validators.required]],
         password2: ['', [Validators.required]],
-        username: ['', [Validators.minLength(6), Validators.required]]
+        username: ['', [Validators.minLength(6), Validators.pattern(this.formUtils().notOnlySpacesPattern), Validators.required]]
     }));
 
     onSubmit(): void {
