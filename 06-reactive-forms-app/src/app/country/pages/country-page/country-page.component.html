@@ -2,7 +2,7 @@
 
 <hr />
 
-<form>
+<form [formGroup]="myForm()">
     <div class="row mb-3">
         <div class="col">
             <label class="form-label">Continente:</label>
@@ -10,9 +10,11 @@
             <select formControlName="region" class="form-control">
                 <option value="">-- Seleccione Continente --</option>
 
-                <!-- <option [value]="region">
-                    {{ region }}
-                </option> -->
+                @for (region of regions(); track region) {
+                    <option [value]="region">
+                        {{ region }}
+                    </option>
+                }
             </select>
         </div>
     </div>
@@ -53,4 +55,5 @@
     <!-- {{ 'myForm.value' | json }} -->
 </code>
 
-<p>is form valid: {{ 'myForm.valid' }}</p>
+<p>is form valid: {{ myForm().valid }}</p>
+<p>value: {{ myForm().value | json }}</p>
