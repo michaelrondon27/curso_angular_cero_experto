@@ -1,7 +1,7 @@
 import { Component, effect, EffectRef, inject, signal, WritableSignal } from '@angular/core';
 import { JsonPipe } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Subscription, switchMap, tap } from 'rxjs';
+import { filter, Subscription, switchMap, tap } from 'rxjs';
 
 // Interfaces
 import { Country } from '../../interfaces/country.interface';
@@ -32,12 +32,26 @@ export default class CountryPageComponent {
     public regions  : WritableSignal<string[]> = signal<string[]>(this._countryService.regions);
 
     public onFormChanged: EffectRef = effect((onCleanup) => {
-        const regionSubscription: Subscription = this.onRegionChanged();
+        const countrySubscription: Subscription = this.onCountryChanged();
+        const regionSubscription : Subscription = this.onRegionChanged();
 
         onCleanup(() => {
+            countrySubscription.unsubscribe();
             regionSubscription.unsubscribe();
         });
     });
+
+    onCountryChanged(): Subscription {
+        return this.myForm().get('country')!.valueChanges
+            .pipe(
+                tap(() => this.myForm().get('border')!.setValue('')),
+                tap(() => this.borders.set([])),
+                filter((value: string) => !!value),
+                switchMap((alphaCode: string) => this._countryService.getCountryByAlphaCode(alphaCode ?? '')),
+                switchMap((country: Country) => this._countryService.getCountryNamesByCodes(country.borders))
+            )
+            .subscribe((boders: Country[]) => this.borders.set(boders));
+    }
 
     onRegionChanged(): Subscription {
         return this.myForm().get('region')!.valueChanges

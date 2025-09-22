@@ -1,6 +1,6 @@
 import { inject, Injectable, signal, WritableSignal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { combineLatest, Observable, of } from 'rxjs';
 
 // Interfaces
 import { Country } from '../interfaces/country.interface';
@@ -33,10 +33,20 @@ export class CountryService {
         return this._httpClient.get<Country[]>(`${ this._baseUrl() }/region/${ region }?fields=borders,cca3,name`);
     }
 
-    getCountryBordersByCode(borders: string) {}
-
     getCountryByAlphaCode(alphaCode: string): Observable<Country> {
         return this._httpClient.get<Country>(`${ this._baseUrl() }/alpha/${ alphaCode }?fields=borders,cca3,name`);
+    }
+
+    getCountryNamesByCodes(codes: string[]): Observable<Country[]> {
+        if (!codes || !codes.length) {
+            return of([]);
+        }
+
+        const countriesRequest: Observable<Country>[] = [];
+
+        codes.forEach((code: string) => countriesRequest.push(this.getCountryByAlphaCode(code)));
+
+        return combineLatest(countriesRequest);
     }
 
 }
