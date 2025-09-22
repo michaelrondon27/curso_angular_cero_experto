@@ -73,6 +73,9 @@ export class FormUtils {
                 case 'required':
                     return 'Este campo es requerido';
 
+                case 'usernameNotAvailable':
+                    return 'El username aportado no se encuentra disponible';
+
                 default:
                     return `Error de validación de controlado ${ key }`;
             }
@@ -102,6 +105,12 @@ export class FormUtils {
             formArray.controls[index].errors &&
             formArray.controls[index].touched
         );
+    }
+
+    static usernameNotAvailable(control: AbstractControl): ValidationErrors | null {
+        const value: string = control.value;
+
+        return value === 'mrondon' ? { usernameNotAvailable: true } : null;
     }
 
 }

@@ -23,7 +23,7 @@ export default class RegisterPageComponent {
         name: ['', [Validators.pattern(this.formUtils().namePattern), Validators.required]],
         password: ['', [Validators.minLength(6), Validators.required]],
         password2: ['', [Validators.required]],
-        username: ['', [Validators.minLength(6), Validators.pattern(this.formUtils().notOnlySpacesPattern), Validators.required]]
+        username: ['', [Validators.minLength(6), Validators.pattern(this.formUtils().notOnlySpacesPattern), Validators.required, this.formUtils().usernameNotAvailable]]
     }, {
         validators: [
             this.formUtils().isFieldOneEqualFieldTwo('password', 'password2')
