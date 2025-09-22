@@ -50,7 +50,7 @@ export default class CountryPageComponent {
                 switchMap((alphaCode: string) => this._countryService.getCountryByAlphaCode(alphaCode ?? '')),
                 switchMap((country: Country) => this._countryService.getCountryNamesByCodes(country.borders))
             )
-            .subscribe((boders: Country[]) => this.borders.set(boders));
+            .subscribe((borders: Country[]) => this.borders.set(borders));
     }
 
     onRegionChanged(): Subscription {
