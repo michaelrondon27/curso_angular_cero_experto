@@ -1,4 +1,4 @@
-import { AfterContentChecked, AfterContentInit, afterEveryRender, afterNextRender, AfterViewChecked, AfterViewInit, Component, DoCheck, effect, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { AfterContentChecked, AfterContentInit, afterEveryRender, afterNextRender, AfterRenderRef, AfterViewChecked, AfterViewInit, Component, DoCheck, effect, EffectRef, OnChanges, OnDestroy, OnInit, signal, SimpleChanges, WritableSignal } from '@angular/core';
 
 const log = (...messages: string[]) => {
     console.log(
@@ -14,11 +14,14 @@ const log = (...messages: string[]) => {
 })
 export default class HomePageComponent implements AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit, DoCheck, OnChanges, OnDestroy, OnInit {
 
+    public signalProperty     : WritableSignal<string> = signal<string>('Michael');
+    public traditionalProperty: string = 'Michael';
+
     constructor() {
         log("Constructor llamado.");
     }
 
-    basicEffect = effect((onCleanup) => {
+    public basicEffect: EffectRef = effect((onCleanup) => {
         log("effect", "Disparar efectos secundarios.");
 
         onCleanup(() => {
@@ -58,12 +61,20 @@ export default class HomePageComponent implements AfterContentChecked, AfterCont
         log("ngOnDestroy", "Runs once before the component is destroyed.");
     }
 
-    afterNextRenderEffect = afterNextRender(() => {
+    public afterNextRenderEffect: AfterRenderRef = afterNextRender(() => {
         log("afterNextRender", "Runs once the next time that all components have been rendered to the DOM.");
     });
 
-    afterEveryRenderEffect = afterEveryRender(() => {
+    public afterEveryRenderEffect: AfterRenderRef = afterEveryRender(() => {
         log("afterEveryRender", "Runs every time all components have been rendered to the DOM.");
     });
+
+    changeSignal(): void {
+        this.signalProperty.set('Michael Rondon');
+    }
+
+    changeTraditional(): void {
+        this.traditionalProperty = 'Michael Rondon';
+    }
 
 }
