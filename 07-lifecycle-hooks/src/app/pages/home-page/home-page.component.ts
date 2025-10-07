@@ -1,5 +1,8 @@
 import { AfterContentChecked, AfterContentInit, afterEveryRender, afterNextRender, AfterRenderRef, AfterViewChecked, AfterViewInit, Component, DoCheck, effect, EffectRef, OnChanges, OnDestroy, OnInit, signal, SimpleChanges, WritableSignal } from '@angular/core';
 
+// Components
+import { TitleComponent } from '../../components/title/title.component';
+
 const log = (...messages: string[]) => {
     console.log(
         `${ messages[0] } %c${ messages.slice(1).join(', ') }`,
@@ -9,7 +12,9 @@ const log = (...messages: string[]) => {
 
 @Component({
     selector: 'app-home-page',
-    imports: [],
+    imports: [
+        TitleComponent
+    ],
     templateUrl: './home-page.component.html'
 })
 export default class HomePageComponent implements AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit, DoCheck, OnChanges, OnDestroy, OnInit {
