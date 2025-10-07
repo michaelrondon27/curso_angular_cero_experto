@@ -1,11 +1,10 @@
 import { Component, inject, Signal, signal, WritableSignal } from '@angular/core';
 import { Event, NavigationEnd, Route, Router, RouterLink } from '@angular/router';
-import { filter, map, Observable } from 'rxjs';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { filter, map } from 'rxjs';
 
 // Routes
 import { routes } from '../../../app.routes';
-import { AsyncPipe } from '@angular/common';
-import { toSignal } from '@angular/core/rxjs-interop';
 
 interface RouteNavBar {
     path : string;
@@ -15,7 +14,6 @@ interface RouteNavBar {
 @Component({
     selector: 'app-navbar',
     imports: [
-        AsyncPipe,
         RouterLink
     ],
     templateUrl: './navbar.component.html'
