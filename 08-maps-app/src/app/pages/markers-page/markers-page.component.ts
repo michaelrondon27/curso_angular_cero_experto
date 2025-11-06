@@ -46,6 +46,17 @@ export default class MarkersPageComponent implements AfterViewInit {
         this._mapListeners(map);
     }
 
+    deleteMarker(marker: MarkerCustom): void {
+        if (!this.map()) {
+            return;
+        }
+
+        marker.mapboxMarker.remove();
+        this.markers.update((markers: MarkerCustom[]) => [
+            ...markers.filter((m: MarkerCustom) => m.id !== marker.id)
+        ]);
+    }
+
     flyToMarker(lngLat: LngLatLike): void {
         if (!this.map()) {
             return;
