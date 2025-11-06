@@ -1,10 +1,16 @@
 import { AfterViewInit, Component, ElementRef, Signal, signal, viewChild, WritableSignal } from '@angular/core';
-import mapboxgl from 'mapbox-gl';
+import mapboxgl, { LngLat, Marker } from 'mapbox-gl';
+import { v4 as UuidV4 } from 'uuid';
 
 // Environments
 import { environment } from '../../../environments/environment';
 
 mapboxgl.accessToken = environment.mapboxKey;
+
+interface MarkerCustom {
+    id          : string;
+    mapboxMarker: Marker;
+}
 
 @Component({
     selector: 'app-markers-page',
@@ -13,7 +19,8 @@ mapboxgl.accessToken = environment.mapboxKey;
 })
 export default class MarkersPageComponent implements AfterViewInit {
 
-    public map: WritableSignal<mapboxgl.Map | null> = signal<mapboxgl.Map | null>(null);
+    public map    : WritableSignal<mapboxgl.Map | null> = signal<mapboxgl.Map | null>(null);
+    public markers: WritableSignal<MarkerCustom[]> = signal<MarkerCustom[]>([]);
 
     public divElement: Signal<ElementRef | undefined> = viewChild<ElementRef>('map');
 
@@ -33,14 +40,32 @@ export default class MarkersPageComponent implements AfterViewInit {
             zoom: 14
         });
 
-        const marker = new mapboxgl.Marker({})
-            .setLngLat([-3.7045, 40.4172])
-            .addTo(map);
-
-        this.mapListeners(map);
+        this._mapListeners(map);
     }
 
-    mapListeners(map: mapboxgl.Map): void {
+    private _mapClick(event: mapboxgl.MapMouseEvent): void {
+        if (!this.map()) {
+            return;
+        }
+
+        const color : string = '#xxxxxx'.replace(/x/g, (y) => ((Math.random() * 16) | 0).toString(16));
+        const coords: LngLat = event.lngLat;
+        const marker: Marker = new mapboxgl.Marker({ color })
+            .setLngLat(coords)
+            .addTo(this.map()!);
+
+        this.markers.update((values: MarkerCustom[]) => [
+            {
+                id: UuidV4(),
+                mapboxMarker: marker
+            },
+            ...values
+        ]);
+    }
+
+    private _mapListeners(map: mapboxgl.Map): void {
+        map.on('click', (event) => this._mapClick(event));
+
         this.map.set(map);
     }
 

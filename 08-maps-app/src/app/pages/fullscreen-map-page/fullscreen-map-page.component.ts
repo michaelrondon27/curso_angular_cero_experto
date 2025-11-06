@@ -72,10 +72,10 @@ export default class FullscreenMapPageComponent implements AfterViewInit {
             zoom: this.zoom()
         });
 
-        this.mapListeners(map);
+        this._mapListeners(map);
     }
 
-    mapListeners(map: mapboxgl.Map): void {
+    private _mapListeners(map: mapboxgl.Map): void {
         map.addControl(new mapboxgl.FullscreenControl());
         map.addControl(new mapboxgl.NavigationControl());
         map.addControl(new mapboxgl.ScaleControl());
