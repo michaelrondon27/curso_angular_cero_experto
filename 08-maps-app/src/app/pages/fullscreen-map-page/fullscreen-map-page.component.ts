@@ -1,16 +1,22 @@
 import { AfterViewInit, Component, effect, EffectRef, ElementRef, signal, Signal, viewChild, WritableSignal } from '@angular/core';
-import { DecimalPipe } from '@angular/common';
-import mapboxgl from 'mapbox-gl';
+import { DecimalPipe, JsonPipe } from '@angular/common';
+import mapboxgl, { LngLat } from 'mapbox-gl';
 
 // Environments
 import { environment } from '../../../environments/environment';
 
 mapboxgl.accessToken = environment.mapboxKey;
 
+interface LngLatCustom {
+    lng: number;
+    lat: number;
+}
+
 @Component({
     selector: 'app-fullscreen-map-page',
     imports: [
-        DecimalPipe
+        DecimalPipe,
+        JsonPipe
     ],
     templateUrl: './fullscreen-map-page.component.html',
     styles: `
@@ -35,6 +41,7 @@ mapboxgl.accessToken = environment.mapboxKey;
 })
 export default class FullscreenMapPageComponent implements AfterViewInit {
 
+    public coordinates: WritableSignal<LngLatCustom> = signal<LngLatCustom>({ lat: 40, lng: -74.5 });
     public map : WritableSignal<mapboxgl.Map | null> = signal<mapboxgl.Map | null>(null);
     public zoom: WritableSignal<number> = signal<number>(14);
 
@@ -55,10 +62,11 @@ export default class FullscreenMapPageComponent implements AfterViewInit {
 
         await new Promise((resolve) => setTimeout(resolve, 80));
 
-        const element = this.divElement()!.nativeElement
+        const element = this.divElement()!.nativeElement;
+        const { lat, lng } = this.coordinates();
 
         const map = new mapboxgl.Map({
-            center: [-74.5, 40],
+            center: [lng, lat],
             container: element,
             style: 'mapbox://styles/mapbox/streets-v12',
             zoom: this.zoom()
@@ -68,7 +76,13 @@ export default class FullscreenMapPageComponent implements AfterViewInit {
     }
 
     mapListeners(map: mapboxgl.Map): void {
-        map.on('zoom', (event) => {
+        map.on('moveend', (event) => {
+            const center: LngLat = map.getCenter();
+
+            this.coordinates.set(center);
+        });
+
+        map.on('zoomend', (event) => {
             const newZoom: number = event.target.getZoom();
 
             this.zoom.set(newZoom);

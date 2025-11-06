@@ -16,4 +16,13 @@
         type="range"
         [value]="zoom()"
     />
+
+    <h2 class="font-bold my-2 text-2xl text-black">Coordenadas</h2>
+
+    <pre class="font-normal text-gray-500 text-sm">{{
+        {
+            latitude: coordinates().lat | number:'1.4-4',
+            longitude: coordinates().lng | number:'1.4-4'
+        } | json
+    }}</pre>
 </section>
