@@ -42,8 +42,8 @@ interface LngLatCustom {
 export default class FullscreenMapPageComponent implements AfterViewInit {
 
     public coordinates: WritableSignal<LngLatCustom> = signal<LngLatCustom>({ lat: 40.4172, lng: -3.7045 });
-    public map : WritableSignal<mapboxgl.Map | null> = signal<mapboxgl.Map | null>(null);
-    public zoom: WritableSignal<number> = signal<number>(14);
+    public map        : WritableSignal<mapboxgl.Map | null> = signal<mapboxgl.Map | null>(null);
+    public zoom       : WritableSignal<number> = signal<number>(14);
 
     public divElement: Signal<ElementRef | undefined> = viewChild<ElementRef>('map');
 
