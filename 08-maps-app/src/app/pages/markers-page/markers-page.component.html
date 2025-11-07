@@ -1,9 +1,9 @@
 <div
     #map
-    class="h-[calc(100vh-64px)]"
+    class="h-[calc(60vh-64px)] sm:h-[calc(100vh-64px)]"
 ></div>
 
-<section class="bg-white fixed left-10 p-5 rounded top-20 w-[260px]">
+<section class="bg-white h-[40vh] overflow-y-scroll p-5 sm:fixed sm:left-10 sm:rounded sm:top-20 sm:w-[260px]">
     <h2 class="font-bold mb-2 text-black text-xl">
         Marcadores
     </h2>
@@ -15,7 +15,7 @@
                 (click)="flyToMarker(marker.mapboxMarker.getLngLat())"
                 (dblclick)="deleteMarker(marker)"
             >
-                <label class="label cursor-pointer">
+                <label class="cursor-pointer flex label justify-between">
                     <span class="label-text text-black text-wrap text-xs">
                         {{ marker.mapboxMarker.getLngLat() | json }}
                     </span>
