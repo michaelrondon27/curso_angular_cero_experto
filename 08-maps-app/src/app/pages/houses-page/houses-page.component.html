@@ -8,8 +8,8 @@
 
 <section class="container gap-2 grid grid-cols-1 mx-auto sm:grid-cols-2 xl:grid-cols-3">
     @for (house of houses(); track house.id; let i = $index) {
-        <div class="bg-base-100 card shadow-xl w-96">
-            <app-mini-map />
+        <div class="bg-base-100 card overflow-hidden rounded-t-md shadow-xl">
+            <app-mini-map [lngLat]="house.lngLat" />
 
             <div class="card-body">
                 <h2 class="card-title">
