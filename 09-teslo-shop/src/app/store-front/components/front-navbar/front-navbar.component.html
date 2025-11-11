@@ -1,1 +1,106 @@
-<p>front-navbar works!</p>,
+<div class="bg-base-100 navbar shadow-sm">
+    <div class="navbar-start">
+        <div class="dropdown">
+            <div
+                class="btn btn-ghost lg:hidden"
+                role="button"
+                tabindex="0"
+            >
+                <svg
+                    class="h-5 w-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        d="M4 6h16M4 12h8m-8 6h16"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                    />
+                </svg>
+            </div>
+
+            <ul
+                class="bg-base-100 dropdown-content menu menu-sm mt-3 p-2 rounded-box shadow w-52 z-1"
+                tabindex="-1"
+            >
+                <li>
+                    <a
+                        class="btn btn-ghost"
+                        routerLink="/gender/men"
+                        routerLinkActive="text-secondary"
+                    >
+                        Hombres
+                    </a>
+                </li>
+
+                <li>
+                    <a
+                        class="btn btn-ghost"
+                        routerLink="/gender/women"
+                        routerLinkActive="text-secondary"
+                    >
+                        Mujeres
+                    </a>
+                </li>
+
+                <li>
+                    <a
+                        class="btn btn-ghost"
+                        routerLink="/gender/kid"
+                        routerLinkActive="text-secondary"
+                    >
+                        Kids
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <a
+            class="btn btn-ghost font-montserrat text-xl"
+            routerLink="/"
+        >
+            Teslo <span class="text-secondary">| Shop</span>
+        </a>
+    </div>
+
+    <div class="hidden lg:flex navbar-center">
+        <ul class="menu menu-horizontal px-1">
+            <li>
+                    <a
+                        class="btn btn-ghost"
+                        routerLink="/gender/men"
+                        routerLinkActive="text-secondary"
+                    >
+                        Hombres
+                    </a>
+            </li>
+
+            <li>
+                <a
+                    class="btn btn-ghost"
+                    routerLink="/gender/women"
+                    routerLinkActive="text-secondary"
+                >
+                    Mujeres
+                </a>
+            </li>
+
+            <li>
+                <a
+                    class="btn btn-ghost"
+                    routerLink="/gender/kid"
+                    routerLinkActive="text-secondary"
+                >
+                    Kids
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="navbar-end">
+        <a class="btn">Button</a>
+    </div>
+</div>
