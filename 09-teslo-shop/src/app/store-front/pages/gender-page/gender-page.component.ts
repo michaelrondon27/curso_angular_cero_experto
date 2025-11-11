@@ -5,4 +5,4 @@ import { Component } from '@angular/core';
     imports: [],
     templateUrl: './gender-page.component.html'
 })
-export default class GenderPage { }
+export default class GenderPageComponent { }

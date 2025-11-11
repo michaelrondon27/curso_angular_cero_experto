@@ -9,4 +9,4 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
     ],
     templateUrl: './front-navbar.component.html'
 })
-export class FrontNavbar { }
+export class FrontNavbarComponent { }
