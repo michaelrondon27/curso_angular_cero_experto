@@ -21,7 +21,7 @@ export default class HomePageComponent {
     public productsResource = rxResource({
         params: () => ({}),
         stream: ({ params }) => {
-            return this._productsService.getProducts();
+            return this._productsService.getProducts({});
         }
     });
 

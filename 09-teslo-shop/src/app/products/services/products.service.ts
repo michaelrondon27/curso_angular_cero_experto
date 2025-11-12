@@ -2,8 +2,16 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 
+// Environments
+import { environment } from 'src/environments/environment';
+
 // Interfaces
-import { ProductsResponse } from '@products/interfaces/product.interface';
+import {
+    GetProuctsParams,
+    ProductsResponse
+} from '@products/interfaces/product.interface';
+
+const baseUrl: string = environment.baseUrl;
 
 @Injectable({
     providedIn: 'root'
@@ -12,9 +20,16 @@ export class ProductsService {
 
     private _httpClient: HttpClient = inject(HttpClient);
 
-    getProducts(): Observable<ProductsResponse> {
-        return this._httpClient.get<ProductsResponse>('http://localhost:3000/api/products')
-            .pipe(tap(resp => console.log(resp)));
+    getProducts(params: GetProuctsParams): Observable<ProductsResponse> {
+        const  { gender = '', limit = 9, offset = 0 } = params;
+
+        return this._httpClient.get<ProductsResponse>(`${ baseUrl }/products`, {
+            params: {
+                gender,
+                limit,
+                offset
+            }
+        }).pipe(tap(resp => console.log(resp)));
     }
 
 }

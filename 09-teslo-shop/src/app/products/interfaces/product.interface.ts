@@ -8,6 +8,12 @@ export enum Gender {
     women  = 'women'
 }
 
+export interface GetProuctsParams {
+    gender?: string;
+    limit? : number;
+    offset?: number;
+}
+
 export interface Product {
     description: string;
     gender     : Gender;
