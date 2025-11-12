@@ -29,7 +29,7 @@ export class ProductsService {
                 limit,
                 offset
             }
-        }).pipe(tap(resp => console.log(resp)));
+        });
     }
 
 }
