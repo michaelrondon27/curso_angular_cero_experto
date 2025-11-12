@@ -2,7 +2,7 @@
     <figure>
         <img
             [alt]="product().title"
-            [src]="imageUrl()"
+            [src]="product().images | productImage"
         />
     </figure>
 
