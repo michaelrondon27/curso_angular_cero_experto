@@ -3,17 +3,25 @@
 {
     "compileOnSave": false,
     "compilerOptions": {
-        "strict": true,
-        "noImplicitOverride": true,
-        "noPropertyAccessFromIndexSignature": true,
-        "noImplicitReturns": true,
-        "noFallthroughCasesInSwitch": true,
-        "skipLibCheck": true,
-        "isolatedModules": true,
+        "baseUrl": "./",
         "experimentalDecorators": true,
         "importHelpers": true,
-        "target": "ES2022",
-        "module": "preserve"
+        "isolatedModules": true,
+        "module": "preserve",
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitOverride": true,
+        "noImplicitReturns": true,
+        "noPropertyAccessFromIndexSignature": true,
+        "paths": {
+            "@admin-dashboard/*": ["./src/app/admin-dashboard/*"],
+            "@auth/*": ["./src/app/auth/*"],
+            "@products/*": ["./src/app/products/*"],
+            "@shared/*": ["./src/app/shared/*"],
+            "@store-front/*": ["./src/app/store-front/*"]
+        },
+        "skipLibCheck": true,
+        "strict": true,
+        "target": "ES2022"
     },
     "angularCompilerOptions": {
         "enableI18nLegacyMessageIdFormat": false,
