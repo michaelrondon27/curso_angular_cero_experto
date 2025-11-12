@@ -7,7 +7,10 @@
     </figure>
 
     <div class="card-body">
-        <h2 class="card-title font-montserrat text-accent text-xl">
+        <h2
+            class="card-title cursor-pointer font-montserrat hover:underline text-accent text-xl"
+            [routerLink]="['/product', product().slug]"
+        >
             {{ product().title }}
         </h2>
 

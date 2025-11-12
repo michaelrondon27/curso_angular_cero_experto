@@ -21,7 +21,7 @@ export default class HomePageComponent {
 
     private _productsService: ProductsService = inject(ProductsService);
 
-    public productsResource: ResourceRef<ProductsResponse | undefined> = rxResource<ProductsResponse, {}>({
+    public productsResource: ResourceRef<ProductsResponse | undefined> = rxResource({
         params: () => ({}),
         stream: ({ params }) => {
             return this._productsService.getProducts({});

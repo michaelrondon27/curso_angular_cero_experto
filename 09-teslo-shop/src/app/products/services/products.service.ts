@@ -8,6 +8,7 @@ import { environment } from 'src/environments/environment';
 // Interfaces
 import {
     GetProuctsParams,
+    Product,
     ProductsResponse
 } from '@products/interfaces/product.interface';
 
@@ -19,6 +20,10 @@ const baseUrl: string = environment.baseUrl;
 export class ProductsService {
 
     private _httpClient: HttpClient = inject(HttpClient);
+
+    getProductByIdSlug(idSlug: string): Observable<Product> {
+        return this._httpClient.get<Product>(`${ baseUrl }/products/${ idSlug }`);
+    }
 
     getProducts(params: GetProuctsParams): Observable<ProductsResponse> {
         const  { gender = '', limit = 9, offset = 0 } = params;
