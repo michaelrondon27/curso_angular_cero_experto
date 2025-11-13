@@ -3,6 +3,7 @@
 <h2 class="mb-5 text-xl">Para todos los gustos</h2>
 
 <app-pagination
+    [currentPage]="currentPage()"
     [pages]="productsResource.value()?.pages ?? 0"
 />
 
