@@ -1,0 +1,10 @@
+<div class="flex items-center join justify-center mb-10 mt-4">
+    @for (page of getPagesList(); track page) {
+        <button
+            class="btn join-item"
+            [class.btn-accent]="page === currentPage()"
+        >
+            {{ page }}
+        </button>
+    }
+</div>

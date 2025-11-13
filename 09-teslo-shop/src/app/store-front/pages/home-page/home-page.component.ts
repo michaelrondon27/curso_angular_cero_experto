@@ -2,6 +2,7 @@ import { Component, inject, ResourceRef } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 
 // Components
+import { PaginationComponent } from '@shared/components/pagination/pagination.component';
 import { ProductCardComponent } from '@products/components/product-card/product-card.component';
 
 // Interfaces
@@ -13,6 +14,7 @@ import { ProductsService } from '@products/services/products.service';
 @Component({
     selector: 'app-home-page',
     imports: [
+        PaginationComponent,
         ProductCardComponent
     ],
     templateUrl: './home-page.component.html'
