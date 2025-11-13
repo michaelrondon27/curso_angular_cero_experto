@@ -2,11 +2,6 @@
 
 <h2 class="mb-5 text-xl">Para todos los gustos</h2>
 
-<app-pagination
-    [currentPage]="currentPage()"
-    [pages]="productsResource.value()?.pages ?? 0"
-/>
-
 <div class="gap-3 grid grid-cols-1 md:grid-cols-2 mt-2 lg:grid-cols-3 xl:grid-cols-4">
     @for (product of productsResource.value()?.products; track product.id) {
         <product-card [product]="product" />
@@ -14,3 +9,8 @@
         <p>No hay productos</p>
     }
 </div>
+
+<app-pagination
+    [currentPage]="currentPage()"
+    [pages]="productsResource.value()?.pages ?? 0"
+/>

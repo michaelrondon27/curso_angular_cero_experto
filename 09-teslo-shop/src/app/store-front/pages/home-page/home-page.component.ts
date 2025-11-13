@@ -1,7 +1,5 @@
-import { Component, inject, ResourceRef, Signal } from '@angular/core';
-import { rxResource, toSignal } from '@angular/core/rxjs-interop';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { map } from 'rxjs';
+import { Component, inject, linkedSignal, ResourceRef, WritableSignal } from '@angular/core';
+import { rxResource } from '@angular/core/rxjs-interop';
 
 // Components
 import { PaginationComponent } from '@shared/components/pagination/pagination.component';
@@ -11,6 +9,7 @@ import { ProductCardComponent } from '@products/components/product-card/product-
 import { ProductsResponse } from '@products/interfaces/product.interface';
 
 // Services
+import { PaginationService } from '@shared/components/pagination/pagination.service';
 import { ProductsService } from '@products/services/products.service';
 
 @Component({
@@ -23,13 +22,12 @@ import { ProductsService } from '@products/services/products.service';
 })
 export default class HomePageComponent {
 
-    private _activatedRoute : ActivatedRoute = inject(ActivatedRoute);
-    private _productsService: ProductsService = inject(ProductsService);
+    private _paginationService: PaginationService = inject(PaginationService);
+    private _productsService  : ProductsService = inject(ProductsService);
 
-    public currentPage: Signal<number> = toSignal<number, 1>(this._activatedRoute.queryParamMap.pipe(
-        map((params: ParamMap) => params.get('page') ? +params.get('page')! : 1),
-        map((page: number) => isNaN(page) ? 1 : page)
-    ), { initialValue: 1 });
+    public currentPage: WritableSignal<number> = linkedSignal<number>(
+        this._paginationService.currentPage
+    );
 
     public productsResource: ResourceRef<ProductsResponse | undefined> = rxResource({
         params: () => ({ page: this.currentPage() - 1 }),
