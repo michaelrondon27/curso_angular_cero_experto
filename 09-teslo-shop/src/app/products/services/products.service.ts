@@ -21,10 +21,17 @@ export class ProductsService {
 
     private _httpClient: HttpClient = inject(HttpClient);
 
+    private _productCache: Map<string, Product> = new Map<string, Product>();
     private _productsCache: Map<string, ProductsResponse> = new Map<string, ProductsResponse>();
 
     getProductByIdSlug(idSlug: string): Observable<Product> {
-        return this._httpClient.get<Product>(`${ baseUrl }/products/${ idSlug }`);
+        if (this._productCache.has(idSlug)) {
+            return of(this._productCache.get(idSlug)!);
+        }
+
+        return this._httpClient.get<Product>(`${ baseUrl }/products/${ idSlug }`).pipe(
+            tap((resp: Product) => this._productCache.set(idSlug, resp))
+        );
     }
 
     getProducts(params: GetProudctsParams): Observable<ProductsResponse> {
