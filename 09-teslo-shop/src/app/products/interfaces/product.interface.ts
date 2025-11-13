@@ -8,7 +8,7 @@ export enum Gender {
     women  = 'women'
 }
 
-export interface GetProuctsParams {
+export interface GetProudctsParams {
     gender?: string;
     limit? : number;
     offset?: number;
