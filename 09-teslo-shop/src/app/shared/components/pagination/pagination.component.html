@@ -2,7 +2,12 @@
     @for (page of getPagesList(); track page) {
         <button
             class="btn join-item"
-            [class.btn-accent]="page === currentPage()"
+            [class.btn-accent]="page === activePage()"
+            (click)="activePage.set(page)"
+            [routerLink]="[]"
+            [queryParams]="{
+                page: page
+            }"
         >
             {{ page }}
         </button>
