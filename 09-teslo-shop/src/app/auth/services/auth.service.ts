@@ -1,6 +1,6 @@
 import { computed, inject, Injectable, Signal, signal, WritableSignal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { catchError, map, Observable, of, tap } from 'rxjs';
 
 // Environments
 import { environment } from 'src/environments/environment';
@@ -38,7 +38,7 @@ export class AuthService {
     public token     : Signal<string | null> = computed<string | null>(() => this._token());
     public user      : Signal<User | null> = computed<User | null>(() => this._user());
 
-    login(email: string, password: string): Observable<AuthResponse> {
+    login(email: string, password: string): Observable<boolean> {
         return this._httpClient.post<AuthResponse>(`${ baseUrl }/auth/login`, {
             email,
             password
@@ -49,6 +49,14 @@ export class AuthService {
                 this._user.set(resp.user);
 
                 localStorage.setItem('token', resp.token);
+            }),
+            map(() => true),
+            catchError((error: any) => {
+                this._authStatus.set('not-authenticated');
+                this._token.set(null);
+                this._user.set(null);
+
+                return of(false);
             })
         );
     }

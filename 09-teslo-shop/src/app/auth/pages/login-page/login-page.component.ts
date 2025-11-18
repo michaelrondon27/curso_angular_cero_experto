@@ -1,9 +1,6 @@
 import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
-
-// Interfaces
-import { AuthResponse } from '@auth/interfaces/auth-response.interface';
+import { Router, RouterLink } from '@angular/router';
 
 // Services
 import { AuthService } from '@auth/services/auth.service';
@@ -20,6 +17,7 @@ export default class LoginPageComponent {
 
     private _authService: AuthService = inject(AuthService);
     private _formBuilder: FormBuilder = inject(FormBuilder);
+    private _router     : Router = inject(Router);
 
     public hasError : WritableSignal<boolean> = signal<boolean>(false);
     public isPosting: WritableSignal<boolean> = signal<boolean>(false);
@@ -42,7 +40,19 @@ export default class LoginPageComponent {
         const { email = '', password = '' } = this.loginForm().value;
 
         this._authService.login(email, password).subscribe({
-            next: (resp: AuthResponse) => console.log(resp)
+            next: (resp: boolean) => {
+                if (resp) {
+                    this._router.navigate(['/']);
+
+                    return;
+                }
+
+                this.hasError.set(true);
+
+                setTimeout(() => {
+                    this.hasError.set(false);
+                }, 2000);
+            }
         });
     }
 
