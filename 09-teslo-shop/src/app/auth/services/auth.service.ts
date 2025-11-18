@@ -1,6 +1,7 @@
 import { computed, inject, Injectable, Signal, signal, WritableSignal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map, Observable, of, tap } from 'rxjs';
+import { rxResource } from '@angular/core/rxjs-interop';
 
 // Environments
 import { environment } from 'src/environments/environment';
@@ -37,6 +38,40 @@ export class AuthService {
     });
     public token     : Signal<string | null> = computed<string | null>(() => this._token());
     public user      : Signal<User | null> = computed<User | null>(() => this._user());
+
+    checkStatusResource = rxResource({
+        stream: () => this.checkStatus()
+    })
+
+    checkStatus(): Observable<boolean> {
+        const token: string | null = localStorage.getItem('token');
+
+        if (!token) {
+            return of(false);
+        }
+
+        return this._httpClient.get<AuthResponse>(`${ baseUrl }/auth/check-status`, {
+            headers: {
+                Authorization: `Bearer ${ token }`
+            }
+        }).pipe(
+            tap((resp: AuthResponse) => {
+                this._authStatus.set('authenticated');
+                this._token.set(resp.token);
+                this._user.set(resp.user);
+
+                localStorage.setItem('token', resp.token);
+            }),
+            map(() => true),
+            catchError((error: any) => {
+                this._authStatus.set('not-authenticated');
+                this._token.set(null);
+                this._user.set(null);
+
+                return of(false);
+            })
+        );
+    }
 
     login(email: string, password: string): Observable<boolean> {
         return this._httpClient.post<AuthResponse>(`${ baseUrl }/auth/login`, {
