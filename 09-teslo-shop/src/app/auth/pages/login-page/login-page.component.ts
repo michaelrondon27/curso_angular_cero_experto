@@ -2,6 +2,12 @@ import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 
+// Interfaces
+import { AuthResponse } from '@auth/interfaces/auth-response.interface';
+
+// Services
+import { AuthService } from '@auth/services/auth.service';
+
 @Component({
     selector: 'app-login-page',
     imports: [
@@ -12,6 +18,7 @@ import { RouterLink } from '@angular/router';
 })
 export default class LoginPageComponent {
 
+    private _authService: AuthService = inject(AuthService);
     private _formBuilder: FormBuilder = inject(FormBuilder);
 
     public hasError : WritableSignal<boolean> = signal<boolean>(false);
@@ -34,7 +41,9 @@ export default class LoginPageComponent {
 
         const { email = '', password = '' } = this.loginForm().value;
 
-        console.log({ email, password });
+        this._authService.login(email, password).subscribe({
+            next: (resp: AuthResponse) => console.log(resp)
+        });
     }
 
 }
