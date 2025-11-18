@@ -51,11 +51,7 @@ export class AuthService {
             return of(false);
         }
 
-        return this._httpClient.get<AuthResponse>(`${ baseUrl }/auth/check-status`, {
-            headers: {
-                Authorization: `Bearer ${ token }`
-            }
-        }).pipe(
+        return this._httpClient.get<AuthResponse>(`${ baseUrl }/auth/check-status`).pipe(
             map((resp: AuthResponse) => this._handleAuthSuccess(resp)),
             catchError((error: any) => this._handleAuthError(error))
         );
@@ -91,7 +87,7 @@ export class AuthService {
         this._token.set(null);
         this._user.set(null);
 
-        localStorage.removeItem('token');
+        // localStorage.removeItem('token');
     }
 
 }
