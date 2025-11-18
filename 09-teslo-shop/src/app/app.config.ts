@@ -3,7 +3,7 @@ import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/
 import { provideRouter } from '@angular/router';
 
 // Interceptors
-import { loggingInterceptor } from '@shared/interceptors/logging.interceptor';
+import { authInterceptor } from '@auth/interceptors/auth.interceptor';
 
 // Routes
 import { routes } from './app.routes';
@@ -14,7 +14,7 @@ export const appConfig: ApplicationConfig = {
         provideHttpClient(
             withFetch(),
             withInterceptors([
-                loggingInterceptor
+                authInterceptor
             ])
         ),
         provideRouter(routes),

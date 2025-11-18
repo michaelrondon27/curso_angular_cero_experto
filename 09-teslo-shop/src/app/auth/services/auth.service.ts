@@ -22,7 +22,7 @@ export class AuthService {
     private _httpClient: HttpClient = inject(HttpClient);
 
     private _authStatus: WritableSignal<AuthStatus> = signal<AuthStatus>('checking');
-    private _token     : WritableSignal<string | null> = signal<string | null>(null);
+    private _token     : WritableSignal<string | null> = signal<string | null>(localStorage.getItem('token'));
     private _user      : WritableSignal<User | null> = signal<User | null>(null);
 
     public authStatus: Signal<AuthStatus> = computed<AuthStatus>(() => {
@@ -87,7 +87,7 @@ export class AuthService {
         this._token.set(null);
         this._user.set(null);
 
-        // localStorage.removeItem('token');
+        localStorage.removeItem('token');
     }
 
 }
