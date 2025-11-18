@@ -47,6 +47,7 @@ export class AuthService {
         const token: string | null = localStorage.getItem('token');
 
         if (!token) {
+            this.logout();
             return of(false);
         }
 
@@ -55,22 +56,24 @@ export class AuthService {
                 Authorization: `Bearer ${ token }`
             }
         }).pipe(
-            tap((resp: AuthResponse) => {
-                this._authStatus.set('authenticated');
-                this._token.set(resp.token);
-                this._user.set(resp.user);
-
-                localStorage.setItem('token', resp.token);
-            }),
-            map(() => true),
-            catchError((error: any) => {
-                this._authStatus.set('not-authenticated');
-                this._token.set(null);
-                this._user.set(null);
-
-                return of(false);
-            })
+            map((resp: AuthResponse) => this._handleAuthSuccess(resp)),
+            catchError((error: any) => this._handleAuthError(error))
         );
+    }
+
+    private _handleAuthError(error: any): Observable<boolean> {
+        this.logout();
+        return of(false);
+    }
+
+    private _handleAuthSuccess({ token, user }: AuthResponse): boolean {
+        this._authStatus.set('authenticated');
+        this._token.set(token);
+        this._user.set(user);
+
+        localStorage.setItem('token', token);
+
+        return true;
     }
 
     login(email: string, password: string): Observable<boolean> {
@@ -78,22 +81,17 @@ export class AuthService {
             email,
             password
         }).pipe(
-            tap((resp: AuthResponse) => {
-                this._authStatus.set('authenticated');
-                this._token.set(resp.token);
-                this._user.set(resp.user);
-
-                localStorage.setItem('token', resp.token);
-            }),
-            map(() => true),
-            catchError((error: any) => {
-                this._authStatus.set('not-authenticated');
-                this._token.set(null);
-                this._user.set(null);
-
-                return of(false);
-            })
+            map((resp: AuthResponse) => this._handleAuthSuccess(resp)),
+            catchError((error: any) => this._handleAuthError(error))
         );
+    }
+
+    logout(): void {
+        this._authStatus.set('not-authenticated');
+        this._token.set(null);
+        this._user.set(null);
+
+        localStorage.removeItem('token');
     }
 
 }
