@@ -1,5 +1,8 @@
 import { Routes } from "@angular/router";
 
+// Guards
+import { IsAdminGuard } from "@auth/guards/is-admin.guard";
+
 export const adminDashboardRoutes: Routes = [
     {
         path: '',
@@ -17,6 +20,9 @@ export const adminDashboardRoutes: Routes = [
                 path: '**',
                 redirectTo: 'products'
             }
+        ],
+        canMatch: [
+            IsAdminGuard
         ]
     }
 ];

@@ -36,6 +36,7 @@ export class AuthService {
 
         return 'not-authenticated';
     });
+    public isAdmin   : Signal<boolean> = computed<boolean>(() => this._user()?.roles.includes('admin') ?? false);
     public token     : Signal<string | null> = computed<string | null>(() => this._token());
     public user      : Signal<User | null> = computed<User | null>(() => this._user());
 
