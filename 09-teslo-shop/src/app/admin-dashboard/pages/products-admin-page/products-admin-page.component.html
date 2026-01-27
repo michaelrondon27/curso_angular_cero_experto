@@ -5,11 +5,32 @@
 <h3 class="text-lg">
     Total de productos
 
-    <span class="text-accent">10</span>
+    <span class="text-accent">{{ productsResource.value()?.count }}</span>
 </h3>
 
 <div class="divider"></div>
 
+<div class="flex gap-2 h-20 items-center">
+    <app-pagination
+        [currentPage]="currentPage()"
+        [pages]="productsResource.value()?.pages ?? 0"
+    />
+
+    <select
+        #selectPerPage
+        (change)="productsPerPage.set(+selectPerPage.value)"
+        class="select select-bordered w-32"
+    >
+        <option value="10">10</option>
+
+        <option value="20">20</option>
+
+        <option value="50">50</option>
+
+        <option value="100">100</option>
+    </select>
+</div>
+
 <products-table
-    [products]="[]"
+    [products]="productsResource.value()?.products ?? []"
 />

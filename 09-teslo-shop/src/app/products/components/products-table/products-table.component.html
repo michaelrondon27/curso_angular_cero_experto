@@ -40,7 +40,7 @@
 
                             <div>
                                 <a
-                                    class="font-bold"
+                                    class="duration-300 font-bold hover:text-accent transition-colors"
                                     [routerLink]="['/admin/products', product.id]"
                                 >
                                     {{ product.title }}
@@ -63,7 +63,7 @@
                             [ngClass]="{
                                 'badge-error': product.stock <= 10,
                                 'badge-success': product.stock > 20,
-                                'badge-warn': product.stock <= 20
+                                'badge-warning': product.stock > 10 && product.stock <= 20
                             }"
                         >
                             {{ product.stock }}
@@ -73,7 +73,7 @@
                     <th>
                         <a
                             class="btn btn-ghost btn-xs text-accent"
-                            [routerLink]="['admin/products', product.id]"
+                            [routerLink]="['/admin/products', product.id]"
                         >
                             Detalles
                         </a>
