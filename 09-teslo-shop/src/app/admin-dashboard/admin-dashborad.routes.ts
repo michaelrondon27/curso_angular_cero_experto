@@ -12,6 +12,10 @@ export const adminDashboardRoutes: Routes = [
             {
                 path: 'product/:id',
                 loadComponent: () => import('./pages/product-admin-page/product-admin-page')
+            },
+            {
+                path: '**',
+                redirectTo: 'products'
             }
         ]
     }
