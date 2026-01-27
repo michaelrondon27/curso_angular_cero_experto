@@ -14,9 +14,9 @@ import { AuthService } from '@auth/services/auth.service';
         RouterLinkActive,
         RouterOutlet
     ],
-    templateUrl: './admin-dashboard-layout.html'
+    templateUrl: './admin-dashboard-layout.component.html'
 })
-export default class AdminDashboardLayout {
+export default class AdminDashboardLayoutComponent {
 
     private _authService: AuthService = inject(AuthService);
 

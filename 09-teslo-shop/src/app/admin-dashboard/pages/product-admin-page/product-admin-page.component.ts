@@ -3,6 +3,6 @@ import { Component } from '@angular/core';
 @Component({
     selector: 'app-product-admin-page',
     imports: [],
-    templateUrl: './product-admin-page.html'
+    templateUrl: './product-admin-page.component.html'
 })
-export default class ProductAdminPage { }
+export default class ProductAdminPageComponent { }
