@@ -63,4 +63,8 @@ export class ProductsService {
         );
     }
 
+    updateProduct(productLike: Partial<Product>): void {
+
+    }
+
 }

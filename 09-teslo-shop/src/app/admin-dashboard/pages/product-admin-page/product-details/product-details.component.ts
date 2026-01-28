@@ -8,6 +8,9 @@ import { ProductCarouselComponent } from '@products/components/product-carousel/
 // Interfaces
 import { Product } from '@products/interfaces/product.interface';
 
+// Services
+import { ProductsService } from '@products/services/products.service';
+
 // Utils
 import { FormUtils } from '@utils/form-utils';
 
@@ -22,7 +25,8 @@ import { FormUtils } from '@utils/form-utils';
 })
 export class ProductDetailsComponent implements OnInit {
 
-    private _formBuilder: FormBuilder = inject(FormBuilder);
+    private _formBuilder    : FormBuilder = inject(FormBuilder);
+    private _productsService: ProductsService = inject(ProductsService);
 
     public productForm: WritableSignal<FormGroup> = signal<FormGroup>(this._formBuilder.group({
         description: ['', [Validators.required]],
@@ -58,7 +62,19 @@ export class ProductDetailsComponent implements OnInit {
     onSubmit(): void {
         const isValid: boolean = this.productForm().valid;
 
-        console.log(this.productForm().value, { isValid });
+        this.productForm().markAllAsTouched();
+
+        if (!isValid) {
+            return;
+        }
+
+        const formValue = this.productForm().value;
+        const productLike: Partial<Product> = {
+            ...formValue,
+            tags: formValue.tags.toLowerCase().split(',').map((tag: string) => tag.trim()) ?? [ ]
+        };
+
+        this._productsService.updateProduct(productLike);
     }
 
     private _setFormValue(formLike: Partial<Product>) {
