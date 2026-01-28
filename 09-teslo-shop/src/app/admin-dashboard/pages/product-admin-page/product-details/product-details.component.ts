@@ -74,7 +74,7 @@ export class ProductDetailsComponent implements OnInit {
             tags: formValue.tags.toLowerCase().split(',').map((tag: string) => tag.trim()) ?? [ ]
         };
 
-        this._productsService.updateProduct(productLike);
+        this._productsService.updateProduct(this.product().id, productLike).subscribe();
     }
 
     private _setFormValue(formLike: Partial<Product>) {
