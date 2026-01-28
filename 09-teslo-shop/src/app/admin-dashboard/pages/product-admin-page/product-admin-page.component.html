@@ -1,1 +1,9 @@
-<p>product-admin-page works!</p>,
+@if (productResource.isLoading()) {
+    <div class="flex h-screen items-center justify-center">
+        <span class="loading loading-lg loading-spinner"></span>
+    </div>
+}
+
+@if (productResource.hasValue()) {
+    <h1>{{ productResource.value().title }}</h1>
+}
