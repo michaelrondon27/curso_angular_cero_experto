@@ -2,6 +2,7 @@ import { Component, inject, input, InputSignal, OnInit, signal, WritableSignal }
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 // Components
+import { FormErrorLabel } from '@shared/components/form-error-label/form-error-label.component';
 import { ProductCarouselComponent } from '@products/components/product-carousel/product-carousel.component';
 
 // Interfaces
@@ -13,6 +14,7 @@ import { FormUtils } from '@utils/form-utils';
 @Component({
     selector: 'product-details',
     imports: [
+        FormErrorLabel,
         ProductCarouselComponent,
         ReactiveFormsModule
     ],
@@ -54,7 +56,9 @@ export class ProductDetailsComponent implements OnInit {
     }
 
     onSubmit(): void {
-        console.log(this.productForm().value);
+        const isValid: boolean = this.productForm().valid;
+
+        console.log(this.productForm().value, { isValid });
     }
 
     private _setFormValue(formLike: Partial<Product>) {

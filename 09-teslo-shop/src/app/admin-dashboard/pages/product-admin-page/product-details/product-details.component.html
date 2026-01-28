@@ -16,49 +16,71 @@
 
         <input
             class="input input-bordered w-full"
+            [class.border-red-500]="productForm().get('title')?.errors ?? false"
             formControlName="title"
             placeholder="Título"
             type="text"
         />
 
+        <form-error-label [control]="productForm().get('title')!" />
+
         <input
             class="input input-bordered w-full"
+            [class.border-red-500]="productForm().get('slug')?.errors ?? false"
             formControlName="slug"
             placeholder="Slug"
             type="text"
         />
 
+        <form-error-label [control]="productForm().get('slug')!" />
+
         <textarea
             class="textarea textarea-bordered"
+            [class.border-red-500]="productForm().get('description')?.errors ?? false"
             formControlName="description"
             placeholder="Descripción"
             rows="6"
         ></textarea>
 
+        <form-error-label [control]="productForm().get('description')!" />
+
         <h2 class="text-lg font-bold">Datos de venta</h2>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-            <input
-                class="input input-bordered w-full"
-                formControlName="price"
-                placeholder="Precio"
-                type="number"
-            />
+            <div>
+                <input
+                    class="input input-bordered w-full"
+                    [class.border-red-500]="productForm().get('price')?.errors ?? false"
+                    formControlName="price"
+                    placeholder="Precio"
+                    type="number"
+                />
 
-            <input
-                class="input input-bordered w-full"
-                formControlName="stock"
-                placeholder="Inventario"
-                type="number"
-            />
+                <form-error-label [control]="productForm().get('price')!" />
+            </div>
+
+            <div>
+                <input
+                    class="input input-bordered w-full"
+                    [class.border-red-500]="productForm().get('stock')?.errors ?? false"
+                    formControlName="stock"
+                    placeholder="Inventario"
+                    type="number"
+                />
+
+                <form-error-label [control]="productForm().get('stock')!" />
+            </div>
         </div>
 
         <input
             class="input input-bordered w-full"
+            [class.border-red-500]="productForm().get('tags')?.errors ?? false"
             formControlName="tags"
             placeholder="Tags"
             type="text"
         />
+
+        <form-error-label [control]="productForm().get('tags')!" />
 
         <div class="grid grid-cols-4 gap-2">
             <button
