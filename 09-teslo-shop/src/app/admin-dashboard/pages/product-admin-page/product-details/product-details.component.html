@@ -16,7 +16,7 @@
 
         <input
             class="input input-bordered w-full"
-            [class.border-red-500]="productForm().get('title')?.errors ?? false"
+            [class.border-red-500]="(productForm().get('title')?.errors ?? false) && productForm().touched"
             formControlName="title"
             placeholder="Título"
             type="text"
@@ -26,7 +26,7 @@
 
         <input
             class="input input-bordered w-full"
-            [class.border-red-500]="productForm().get('slug')?.errors ?? false"
+            [class.border-red-500]="(productForm().get('slug')?.errors ?? false) && productForm().touched"
             formControlName="slug"
             placeholder="Slug"
             type="text"
@@ -36,7 +36,7 @@
 
         <textarea
             class="textarea textarea-bordered"
-            [class.border-red-500]="productForm().get('description')?.errors ?? false"
+            [class.border-red-500]="(productForm().get('description')?.errors ?? false) && productForm().touched"
             formControlName="description"
             placeholder="Descripción"
             rows="6"
@@ -50,7 +50,7 @@
             <div>
                 <input
                     class="input input-bordered w-full"
-                    [class.border-red-500]="productForm().get('price')?.errors ?? false"
+                    [class.border-red-500]="(productForm().get('price')?.errors ?? false) && productForm().touched"
                     formControlName="price"
                     placeholder="Precio"
                     type="number"
@@ -62,7 +62,7 @@
             <div>
                 <input
                     class="input input-bordered w-full"
-                    [class.border-red-500]="productForm().get('stock')?.errors ?? false"
+                    [class.border-red-500]="(productForm().get('stock')?.errors ?? false) && productForm().touched"
                     formControlName="stock"
                     placeholder="Inventario"
                     type="number"
@@ -74,7 +74,7 @@
 
         <input
             class="input input-bordered w-full"
-            [class.border-red-500]="productForm().get('tags')?.errors ?? false"
+            [class.border-red-500]="(productForm().get('tags')?.errors ?? false) && productForm().touched"
             formControlName="tags"
             placeholder="Tags"
             type="text"

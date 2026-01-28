@@ -1,5 +1,6 @@
 import { Component, inject, input, InputSignal, OnInit, signal, WritableSignal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 // Components
 import { FormErrorLabel } from '@shared/components/form-error-label/form-error-label.component';
@@ -27,6 +28,7 @@ export class ProductDetailsComponent implements OnInit {
 
     private _formBuilder    : FormBuilder = inject(FormBuilder);
     private _productsService: ProductsService = inject(ProductsService);
+    private _router         : Router = inject(Router);
 
     public productForm: WritableSignal<FormGroup> = signal<FormGroup>(this._formBuilder.group({
         description: ['', [Validators.required]],
@@ -74,7 +76,13 @@ export class ProductDetailsComponent implements OnInit {
             tags: formValue.tags.toLowerCase().split(',').map((tag: string) => tag.trim()) ?? [ ]
         };
 
-        this._productsService.updateProduct(this.product().id, productLike).subscribe();
+        if (this.product().id === 'new') {
+            this._productsService.createProduct(productLike).subscribe({
+                next: (product: Product) => this._router.navigate(['/admin/products', product.id])
+            });
+        } else {
+            this._productsService.updateProduct(this.product().id, productLike).subscribe();
+        }
     }
 
     private _setFormValue(formLike: Partial<Product>) {

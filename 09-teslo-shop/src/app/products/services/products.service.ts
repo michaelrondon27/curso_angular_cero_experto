@@ -7,12 +7,28 @@ import { environment } from 'src/environments/environment';
 
 // Interfaces
 import {
+    Gender,
     GetProudctsParams,
     Product,
     ProductsResponse
 } from '@products/interfaces/product.interface';
+import { User } from '@auth/interfaces/user.interface';
 
 const baseUrl: string = environment.baseUrl;
+
+const emptyProduct: Product = {
+    description: '',
+    gender: Gender.men,
+    id: 'new',
+    images: [],
+    price: 0,
+    sizes: [],
+    slug: '',
+    stock: 0,
+    tags: [],
+    title: '',
+    user: {} as User
+}
 
 @Injectable({
     providedIn: 'root'
@@ -24,7 +40,16 @@ export class ProductsService {
     private _productCache: Map<string, Product> = new Map<string, Product>();
     private _productsCache: Map<string, ProductsResponse> = new Map<string, ProductsResponse>();
 
+    createProduct(productLike: Partial<Product>): Observable<Product> {
+        return this._httpClient.post<Product>(`${ baseUrl }/products`, productLike)
+            .pipe(tap((product: Product) => this._updateProductCache(product)))
+    }
+
     getProductById(id: string): Observable<Product> {
+        if (id === 'new') {
+            return of(emptyProduct);
+        }
+
         if (this._productCache.has(id)) {
             return of(this._productCache.get(id)!);
         }
@@ -65,10 +90,10 @@ export class ProductsService {
 
     updateProduct(id: string, productLike: Partial<Product>): Observable<Product> {
         return this._httpClient.patch<Product>(`${ baseUrl }/products/${ id }`, productLike)
-            .pipe(tap((product: Product) => this.updateProductCache(product)));
+            .pipe(tap((product: Product) => this._updateProductCache(product)));
     }
 
-    updateProductCache(product: Product): void {
+    private _updateProductCache(product: Product): void {
         const productId: string = product.id;
 
         this._productCache.set(productId, product);
