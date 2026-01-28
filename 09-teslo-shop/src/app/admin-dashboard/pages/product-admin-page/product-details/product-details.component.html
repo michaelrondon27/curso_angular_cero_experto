@@ -1,0 +1,98 @@
+<h1 class="text-2xl font-bold">
+    {{ product().title }}
+</h1>
+
+<div class="divider"></div>
+
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div class="flex flex-col gap-2">
+        <h2 class="text-2xl font-bold h-12">
+            Datos generales
+        </h2>
+
+        <input
+            class="input input-bordered w-full"
+            placeholder="Título"
+            type="text"
+        />
+
+        <input
+            class="input input-bordered w-full"
+            placeholder="Slug"
+            type="text"
+        />
+
+        <textarea
+            class="textarea textarea-bordered"
+            placeholder="Descripción"
+            rows="6"
+        ></textarea>
+
+        <h2 class="text-lg font-bold">Datos de venta</h2>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <input
+                class="input input-bordered w-full"
+                placeholder="Precio"
+                type="number"
+            />
+
+            <input
+                class="input input-bordered w-full"
+                placeholder="Inventario"
+                type="number"
+            />
+        </div>
+
+        <input
+            class="input input-bordered w-full"
+            placeholder="Tags"
+            type="text"
+        />
+
+        <div class="grid grid-cols-4 gap-2">
+            <button class="btn btn-sm btn-primary">
+                Masculino
+            </button>
+
+            <button class="btn btn-sm btn-accent">
+                Femenino
+            </button>
+
+            <button class="btn btn-sm btn-warning">
+                Kid
+            </button>
+
+            <button class="btn btn-sm btn-secondary">
+                Unisex
+            </button>
+        </div>
+
+        <div class="grid grid-cols-6 gap-2">
+            @for (size of sizes(); track size) {
+                <button class="btn btn-sm btn-outline">
+                    {{ size }}
+                </button>
+            }
+        </div>
+    </div>
+
+    <div class="flex flex-col gap-2">
+        <div class="flex justify-end h-12">
+            <button class="btn btn-secondary" type="submit">
+                <!-- <span class="loading loading-spinner loading-sm"></span> -->
+
+                Guardar
+            </button>
+        </div>
+
+        <product-carousel
+            [images]="product().images"
+        />
+
+        <input
+            class="file-input file-input-bordered w-full mt-4"
+            type="file"
+        />
+    </div>
+</div>
