@@ -101,6 +101,15 @@
     </div>
 
     <div class="gap-4 navbar-end">
+        @if (isAdmin()) {
+            <a
+                class="text-accent"
+                routerLink="/admin"
+            >
+                Admin Panel
+            </a>
+        }
+
         @if (authStatus() === 'authenticated') {
             <button class="btn btn-ghost">
                 {{ user()?.fullName }}

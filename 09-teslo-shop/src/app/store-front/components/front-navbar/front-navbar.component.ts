@@ -20,6 +20,7 @@ export class FrontNavbarComponent {
     private _authService: AuthService = inject(AuthService);
 
     public authStatus: Signal<string> = computed<string>(() => this._authService.authStatus());
+    public isAdmin   : Signal<boolean> = computed<boolean>(() => this._authService.isAdmin());
     public user      : Signal<User | null> = computed<User | null>(() => this._authService.user());
 
     logout(): void {
