@@ -8,6 +8,14 @@
                     [src]="image | productImage"
                 />
             </div>
+        } @empty {
+            <div class="swiper-slide">
+                <img
+                    alt="Producto"
+                    class="animate-fade-in object-cover w-full"
+                    [src]="null | productImage"
+                />
+            </div>
         }
     </div>
 

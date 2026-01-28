@@ -158,3 +158,9 @@
         />
     </div>
 </form>
+
+@if (wasSaved()) {
+    <div class="alert alert-success animate-fade-in bottom-4 fixed right-4 w-80">
+        <span>Datos actualizados correctamente</span>
+    </div>
+}

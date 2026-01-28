@@ -1,6 +1,7 @@
 import { Component, inject, input, InputSignal, OnInit, signal, WritableSignal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
 
 // Components
 import { FormErrorLabel } from '@shared/components/form-error-label/form-error-label.component';
@@ -42,6 +43,7 @@ export class ProductDetailsComponent implements OnInit {
         title: ['', [Validators.required]]
     }));
     public sizes      : WritableSignal<string[]> = signal<string[]>(['XS', 'S', 'M', 'L', 'XL', 'XXL']);
+    public wasSaved   : WritableSignal<boolean> = signal<boolean>(false);
 
     public product: InputSignal<Product> = input.required<Product>();
 
@@ -61,7 +63,7 @@ export class ProductDetailsComponent implements OnInit {
         this.productForm().patchValue({ sizes: currentSizes });
     }
 
-    onSubmit(): void {
+    async onSubmit(): Promise<void> {
         const isValid: boolean = this.productForm().valid;
 
         this.productForm().markAllAsTouched();
@@ -77,12 +79,18 @@ export class ProductDetailsComponent implements OnInit {
         };
 
         if (this.product().id === 'new') {
-            this._productsService.createProduct(productLike).subscribe({
-                next: (product: Product) => this._router.navigate(['/admin/products', product.id])
-            });
+            const product: Product = await firstValueFrom(this._productsService.createProduct(productLike));
+
+            this._router.navigate(['/admin/products', product.id]);
         } else {
-            this._productsService.updateProduct(this.product().id, productLike).subscribe();
+            await firstValueFrom(this._productsService.updateProduct(this.product().id, productLike));
         }
+
+        this.wasSaved.set(true);
+
+        setTimeout(() => {
+            this.wasSaved.set(false);
+        }, 3000);
     }
 
     private _setFormValue(formLike: Partial<Product>) {
